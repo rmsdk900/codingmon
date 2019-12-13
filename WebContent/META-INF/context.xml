@@ -6,7 +6,7 @@
 		type="javax.sql.DataSource"
 		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
 		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/myjava?useSSL=false"  
+		url="jdbc:mysql://localhost:3306/codingmondb?useSSL=false"  
 		username="myjava"
 		password="12345"
 		maxActive="100"
