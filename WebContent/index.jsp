@@ -10,4 +10,7 @@
 <body>
 
 </body>
+	<script>
+		location.href='user/join';
+	</script>
 </html>

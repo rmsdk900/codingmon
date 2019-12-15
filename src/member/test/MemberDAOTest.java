@@ -2,27 +2,25 @@ package member.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
 
 import member.dao.MemberDAO;
 import member.dao.MemberDAOImpl;
-import member.vo.subject.MemberSubject;
+import member.vo.MemberVO;
 
 class MemberDAOTest {
 	MemberDAO dao = new MemberDAOImpl();
 	
 	@Test
 	void testSignUpMember() {
-//		System.out.println("회원가입 테스트");
+		System.out.println("회원가입 테스트");
 //		MemberVO vo = new MemberVO();
-//		vo.setCm_email("admin");
-//		vo.setCm_pw("admin");
-//		vo.setCm_name("관리자");
+//		vo.setCm_email("find@password.com");
+//		vo.setCm_pw("12345678");
+//		vo.setCm_name("비밀번호모르는 애");
 //		vo.setCm_phone("01012341234");
-//		vo.setCm_addr("서울");
-//		vo.setCm_salt(11111);
+//		vo.setCm_addr("부산");
+//		vo.setCm_salt(22222);
 //		boolean isSignUp=dao.signUpMember(vo);
 //		System.out.println("회원가입 성공 여부 : "+isSignUp);
 		
@@ -40,7 +38,7 @@ class MemberDAOTest {
 	void testInsertRegion() {
 		System.out.println("지역 정보 추가 테스트");
 //		MemberRegion mr = new MemberRegion();
-//		mr.setCmr_code(1);
+//		mr.setCmr_code(2);
 //		mr.setCmr_owner_num(1);
 //		dao.insertRegion(mr);
 	}
@@ -51,7 +49,7 @@ class MemberDAOTest {
 //		MemberSubject ms = new MemberSubject();
 //		ms.setCms_code(1);
 //		ms.setCms_owner_num(1);
-//		ms.setCms_category(0);
+//		ms.setCms_category(1);
 //		dao.insertSubject(ms);
 	}
 	
@@ -134,17 +132,28 @@ class MemberDAOTest {
 
 	@Test
 	void testAddPassCode() {
-		fail("Not yet implemented");
+		System.out.println("비밀번호 찾기 코드 생성 테스트");
+//		String email = "find@password.com";
+//		String code = "12345";
+//		dao.addPassCode(email, code);
 	}
 
 	@Test
 	void testCheckPassCode() {
-		fail("Not yet implemented");
+		System.out.println("비밀번호 코드 일치 확인 테스트");
+//		String email = "find@password.com";
+//		String code = "12345";
+//		boolean isRight = dao.checkPassCode(email, code);
+//		System.out.println("비밀번호 코드가 일치하니? : "+isRight);
 	}
 
 	@Test
 	void testChangePass() {
-		fail("Not yet implemented");
+		System.out.println("비밀번호 변경 테스트");
+		String email = "find@password.com";
+		String newPass = "change";
+		boolean isChange = dao.changePass(email, newPass);
+		System.out.println("비밀번호 변경 여부 : "+isChange);
 	}
 
 	@Test
@@ -219,11 +228,19 @@ class MemberDAOTest {
 	}
 	
 	@Test
-	void testGetMemberJob() {
+	void testGetJobList() {
 		System.out.println("회원의 직업 불러오기");
 //		int num = 1;
-//		MemberJob mj = dao.getMemberJob(num);
-//		System.out.println(mj);
+//		ArrayList<MemberJob> list = dao.getJobList(num);
+//		System.out.println(list);
+	}
+	
+	@Test
+	void testGetJobs() {
+		System.out.println("회원의 직업 불러오기 2");
+//		ArrayList<String> list = dao.getJobs(dao.getJobList(1));
+//		System.out.println(list);
+		
 	}
 	
 	@Test
@@ -235,11 +252,43 @@ class MemberDAOTest {
 	}
 	
 	@Test
+	void testGetRegions() {
+		System.out.println("회원의 선호 지역 리스트 불러오기2");
+//		ArrayList<String> list = dao.getRegions(dao.getRegionList(1));
+//		System.out.println(list);
+	}
+	
+	@Test
 	void testGetSubjectList() {
 		System.out.println("회원의 사용 언어 리스트 불러오기");
-		int num=1;
-		ArrayList<MemberSubject> list = dao.getSubjectList(num);
-		System.out.println(list);
+//		int num=1;
+//		ArrayList<MemberSubject> list = dao.getSubjectList(num);
+//		System.out.println(list);
 	}
-
+	
+	@Test
+	void testGetSubjects() {
+		System.out.println("회원의 사용 언어 리스트 불러오기2");
+//		HashMap<String, String> map = dao.getSubjects(dao.getSubjectList(1));
+//		System.out.println(map);
+	}
+	
+	@Test
+	void testDeleteJobs() {
+		System.out.println("회원의 모든 직업 정보 삭제 테스트");
+//		dao.deleteJobs(1);
+	}
+	
+	@Test
+	void testDeleteRegions() {
+		System.out.println("회원의 모든 지역 정보 삭제 테스트");
+//		dao.deleteRegions(1);
+	}
+	
+	@Test
+	void testDeleteSubjects() {
+		System.out.println("회원의 모든 언어 정보 삭제 테스트");
+//		dao.deleteSubjects(1);
+	}
+	
 }
