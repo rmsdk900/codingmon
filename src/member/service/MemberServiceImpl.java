@@ -32,6 +32,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public boolean memberSignUp(HttpServletRequest request) {
+		boolean isSignUp = false;
 		String email = request.getParameter("cm_email");
 		String pw = request.getParameter("cm_pw");
 		String name = request.getParameter("cm_name");
@@ -48,8 +49,9 @@ public class MemberServiceImpl implements MemberService {
 		member.setCm_phone(phone);
 		member.setCm_addr(addr);
 		member.setCm_salt(salt);
-
-		return dao.signUpMember(member);
+		isSignUp = dao.signUpMember(member);
+		request.setAttribute("joinMember", dao.getMemberByEmail(email));
+		return isSignUp;
 	}
 	// 부가 정보 입력 처리(직업 정보랑, 지역 정보, 언어 정보까지 넣자)
 	@Override
@@ -60,6 +62,7 @@ public class MemberServiceImpl implements MemberService {
 		String cmi_gender = request.getParameter("cmi_gender");
 		int cmi_age = Integer.parseInt(request.getParameter("cmi_age"));
 		String cmi_career = request.getParameter("cmi_career");
+		String cmi_private = request.getParameter("cmi_private");
 		
 		MemberInfo info = new MemberInfo();
 		
@@ -68,6 +71,7 @@ public class MemberServiceImpl implements MemberService {
 		info.setCmi_gender(cmi_gender);
 		info.setCmi_age(cmi_age);
 		info.setCmi_career(cmi_career);
+		info.setCmi_private(cmi_private);
 		boolean isInfo = dao.insertInfo(info);
 		
 		
@@ -102,7 +106,7 @@ public class MemberServiceImpl implements MemberService {
 			dao.insertSubject(ms);
 		}
 		
-		// 언어 정보 입력. 복수 응답 고려 - 주 언어 
+		// 언어 정보 입력. 복수 응답 고려 - 학습 중인 언어
 		String[] learnings = request.getParameterValues("cms_code_learning");
 		for(String learning : learnings) {
 			MemberSubject ms = new MemberSubject();
@@ -114,7 +118,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		// 부가 정보 입력 결과 처리 창. 
 		if(isInfo) {
-			response.sendRedirect("user/login");
+			response.sendRedirect("login");
 		}else {
 			// 부가정보 입력 페이지로 다시 넘어가기
 			response.setContentType("text/html;charset=utf-8");

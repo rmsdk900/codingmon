@@ -14,7 +14,7 @@
 				<td>코드 입력 : ${param.cm_email}</td>
 				<td>
 					<input type="text" name="cpc_code"/> 
-					<a href="#">재전송</a>
+					<a href="findPw">재전송</a>
 				</td>
 			</tr>
 			<tr>

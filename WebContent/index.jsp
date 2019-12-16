@@ -8,9 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<a href="user/join">회원가입</a>
+	<a href="user/login">로그인</a>
+	<a href="#">로그아웃</a>
 </body>
-	<script>
-		location.href='user/join';
-	</script>
 </html>

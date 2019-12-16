@@ -15,6 +15,10 @@ import util.FactoryUtil;
 
 /**
  * Servlet implementation class MemberController
+ * 
+ * 유킹볼 왔다감. 
+ * 게임을 시작하지
+ * (숨은 v 찾기. 힌트 : 1개입니다.)
  */
 @WebServlet("/user/*")
 public class MemberController extends HttpServlet {
@@ -64,7 +68,7 @@ public class MemberController extends HttpServlet {
 			boolean isSignUp = service.memberSignUp(request);
 			if(isSignUp) {
 				System.out.println("회원가입 성공");
-				response.sendRedirect(request.getContextPath()+"/user/login");
+				nextPage="/member/insertInfo.jsp";
 			}else {
 				System.out.println("회원가입 실패");
 				response.setContentType("text/html;charset=utf-8");
@@ -75,6 +79,11 @@ public class MemberController extends HttpServlet {
 				out.print("</script>");
 			}
 			
+		}
+		
+		if(cmd.equals("user/insertInfo")) {
+			System.out.println("부가정보 입력 시도");
+			service.insertInfo(request, response);
 		}
 		
 		if(cmd.equals("user/login")) {

@@ -72,14 +72,15 @@ public class MemberDAOImpl implements MemberDAO {
 		// 노트북용 연결
 		conn = LaptopDBUtil.getConnection();
 		
-		String sql = "INSERT INTO codingmon_member_info VALUES(?,?,'N',?,?,?,0)";
+		String sql = "INSERT INTO codingmon_member_info VALUES(?,?,?,?,?,?,0)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, info.getCmi_owner_num());
 			pstmt.setString(2, info.getCmi_intro());
-			pstmt.setString(3, info.getCmi_gender());
-			pstmt.setInt(4, info.getCmi_age());
-			pstmt.setString(5, info.getCmi_career());
+			pstmt.setString(3, info.getCmi_private());
+			pstmt.setString(4, info.getCmi_gender());
+			pstmt.setInt(5, info.getCmi_age());
+			pstmt.setString(6, info.getCmi_career());
 			if(pstmt.executeUpdate() > 0)isSuccess=true;
 			
 		} catch (SQLException e) {
