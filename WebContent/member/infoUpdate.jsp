@@ -1,0 +1,182 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:set var="birth" value="${requestScope.info.cmi_age}"/>
+<c:set var="birthYear" value="${fn:substring(birth, 0, 4)}"/>
+<c:set var="birthMonth" value="${fn:substring(birth, 4, 6)}"/>
+<c:set var="birthDay" value="${fn:substring(birth, 6, 8)}"/>
+
+<c:set var="phone" value="${sessionScope.member.cm_phone}"/>
+<c:set var="phoneFirst"      value="${fn:substring(phone, 0, 3)}" />
+<c:set var="phoneMiddle"     value="${fn:substring(phone, 3, 7)}" />
+<c:set var="phoneLast"     value="${fn:substring(phone, 7, 11)}" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form>
+		<input type="hidden" name="cm_num" value="${sessionScope.member.cm_num}"/>
+		<table>
+			<tbody>
+			<c:choose>
+				<c:when test="${!empty requestScope.info 
+				&& !empty requestScope.userJobs
+				&& !empty requestScope.userRegions
+				&& !empty requestScope.userSubjects
+				}">
+					<tr>
+						<th colspan=2>부가 정보 수정</th>
+					</tr>
+					<tr>
+						<th>이메일(아이디)</th>
+						<td>${sessionScope.member.cm_email}</td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td>${sessionScope.member.cm_name}</td>
+					</tr>
+					<tr>
+						<th>생년월일/성별</th>
+						<td>
+						<c:if test="${!empty birth}">
+							<c:out value="${birthYear}-${birthMonth}-${birthDay}"/>
+						</c:if> / 
+							${requestScope.info.cmi_gender eq 'Male' ? '남자' : '여자'}
+						</td>
+					</tr>
+					<tr>
+						<th>연락처</th>
+						<td>
+							<c:if test="${!empty  phone}">
+								<input type="text" name="cm_phone_first" value="${phoneFirst}"/> -
+								<input type="text" name="cm_phone_middle" value="${phoneMiddle}"/> -
+								<input type="text" name="cm_phone_last" value="${phoneLast}"/>
+							</c:if>
+						</td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td>
+							<input type="text" name="cm_addr" value="${sessionScope.member.cm_addr}"/>
+						</td>
+					</tr>
+					<tr>
+						<th>직업</th>
+						<td>
+							<div>
+								<c:forEach var="i" items="${requestScope.ej}">
+										<label>
+											<input type="checkbox" class="cij_code" name="cij_code" value="${i.cj_code}" 
+										<c:forEach var="j" items="${requestScope.userJobs}">
+											${j.key eq i.cj_code ? "checked" : ""}
+										</c:forEach>
+											/>
+											${i.cj_name}
+										</label>
+									
+								</c:forEach>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>선호 지역</th>
+						<td>
+							<div>
+								<c:forEach var="i" items="${requestScope.er}">
+										<label>
+											<input type="checkbox" name="cmr_code" value="${i.cr_code}" 
+										<c:forEach var="j" items="${requestScope.userRegions}">	
+											${j.key eq i.cr_code ? "checked" : ""}
+										</c:forEach>	
+											/>
+											${i.cr_name}
+										</label>
+								</c:forEach>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>주 언어</th>
+						<td>
+							<div>
+								<c:forEach var="i" items="${requestScope.es}">
+											<label>
+												<input type="checkbox" name="cms_code_work" value="${i.cs_code}" 
+										<c:forEach var="j" items="${requestScope.userSubjects}">
+										<c:if test="${j.cms_category eq 0}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+										</c:if>
+										</c:forEach>
+												/>
+												${i.cs_name}
+											</label>
+										
+								</c:forEach>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>공부용 언어</th>
+						<td>
+							<div>
+								<c:forEach var="i" items="${requestScope.es}">
+s											<label>
+												<input type="checkbox" name="cms_code_learning" value="${i.cs_code}" 
+											<c:forEach var="j" items="${requestScope.userSubjects}">
+												<c:if test="${j.cms_category eq 1}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+												</c:if>
+											</c:forEach>
+												/>
+												${i.cs_name}
+											</label>
+								</c:forEach>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>경력사항</th>
+						<td>
+							<textarea name="cmi_career" cols=50 rows=10 placeholder="수상 경력, 자격증, 업무 경험 등...">
+								${requestScope.info.cmi_career}
+							</textarea>
+						</td>
+					</tr>
+					<tr>
+						<th>자기소개</th>
+						<td>
+							<textarea name="cmi_intro" cols=50 rows=20 placeholder="자신의 업무 외적 부분을 어필...">
+								${requestScope.info.cmi_intro}
+							</textarea>
+						</td>
+					</tr>
+					<tr>
+						<th>정보 공개 여부</th>
+						<td>
+						
+							<label>
+								<input type="radio" name="cmi_private" value="N" ${requestScope.info.cmi_private eq 'N' ? "checked" : ""}/>
+								공개
+							</label>
+							<label>
+								<input type="radio" name="cmi_private" value="Y" ${requestScope.info.cmi_private eq 'Y' ? "checked" : ""}/>
+								비공개
+							</label>
+						</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan=2>해당 정보 없음</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>

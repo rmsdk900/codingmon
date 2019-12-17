@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonElement;
+
 public interface MemberService {
 	/**
 	 * 20191214 시작
@@ -24,5 +26,15 @@ public interface MemberService {
 	boolean checkPwCode(HttpServletRequest request, HttpServletResponse response);
 	// 비밀번호 변경
 	void changePw(HttpServletRequest request, HttpServletResponse response);
+	// 로그아웃
+	void logOut(HttpServletRequest request, HttpServletResponse response);
+	// 내 부가 정보들 가져오기.
+	void getMyInfo(HttpServletRequest request);
+	// 아이디 중복 체크
+	boolean checkId(HttpServletRequest request);
+	// 비동기 로그인 확인
+	boolean loginCheckAsync(HttpServletRequest request);
+	// 비밀번호 확인
+	boolean checkPwAsync(HttpServletRequest request);
 	
 }

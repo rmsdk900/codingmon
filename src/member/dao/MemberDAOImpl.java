@@ -9,9 +9,12 @@ import java.util.HashMap;
 
 import member.vo.MemberInfo;
 import member.vo.MemberVO;
+import member.vo.job.JobVO;
 import member.vo.job.MemberJob;
 import member.vo.region.MemberRegion;
+import member.vo.region.RegionVO;
 import member.vo.subject.MemberSubject;
+import member.vo.subject.SubjectVO;
 import util.Criteria;
 import util.DBCPUtil;
 import util.LaptopDBUtil;
@@ -27,11 +30,11 @@ public class MemberDAOImpl implements MemberDAO {
 		System.out.println("DB 회원가입 시작");
 		boolean isSuccess = false;
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_member WHERE cm_email=?";
 		try {
@@ -55,8 +58,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs,pstmt, conn);
-//			DBCPUtil.close(rs,pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs,pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return isSuccess;
 	}
@@ -66,11 +69,11 @@ public class MemberDAOImpl implements MemberDAO {
 		boolean isSuccess = false;
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "INSERT INTO codingmon_member_info VALUES(?,?,?,?,?,?,0)";
 		try {
@@ -87,8 +90,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 		return isSuccess;
 	}
@@ -97,11 +100,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public void insertJob(MemberJob mj) {
 		System.out.println("DB 직업 정보 추가");
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "INSERT INTO codingmon_info_job VALUES(?,?)";
 		try {
@@ -123,11 +126,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public void insertRegion(MemberRegion mr) {
 		System.out.println("DB 지역 정보 추가");
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "INSERT INTO codingmon_member_region VALUES(?,?)";
 		try {
@@ -139,8 +142,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 		
 	}
@@ -149,11 +152,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public void insertSubject(MemberSubject ms) {
 		System.out.println("DB 언어 정보 추가");
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "INSERT INTO codingmon_member_subject VALUES(?,?,?)";
 		try {
@@ -166,8 +169,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 	}
 
@@ -176,11 +179,11 @@ public class MemberDAOImpl implements MemberDAO {
 		System.out.println("DB 로그인 허가");
 		MemberVO member = null;
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_member WHERE cm_email=? AND cm_pw=?";
 		try {
@@ -207,8 +210,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return member;
 	}
@@ -220,11 +223,11 @@ public class MemberDAOImpl implements MemberDAO {
 		int salt = 0;
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT cm_salt FROM codingmon_member WHERE cm_email=?";
 		try {
@@ -236,8 +239,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		
 		return salt;
@@ -248,11 +251,11 @@ public class MemberDAOImpl implements MemberDAO {
 		System.out.println("DB email로 member 가져오기");
 		MemberVO member = null;
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_member WHERE cm_email=?";
 		try {
@@ -276,8 +279,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return member;
 	}
@@ -288,11 +291,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberInfo getInfoByNum(int num) {
 		MemberInfo info = null;
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_member_info WHERE cmi_owner_num="+num;
 		try {
@@ -313,8 +316,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return info;
 	}
@@ -324,11 +327,11 @@ public class MemberDAOImpl implements MemberDAO {
 		boolean isSuccess = false;
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "UPDATE codingmon_member SET cm_pw=?, cm_phone=?, cm_addr=? WHERE cm_num=? AND cm_email=?";
 		try {
@@ -344,8 +347,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 		return isSuccess;
 	}
@@ -355,11 +358,11 @@ public class MemberDAOImpl implements MemberDAO {
 		boolean isSuccess = false;
 				
 		//서버로 연결
-		//conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 		//conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "UPDATE codingmon_member_info SET cmi_intro=?, cmi_private=?, cmi_gender=?, cmi_age=?, cmi_career=? WHERE cmi_owner_num=?";
 		try {
@@ -376,8 +379,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 		
 		return isSuccess;
@@ -386,11 +389,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void addPassCode(String email, String code) {
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_passcode WHERE cpc_email=?";
 		try {
@@ -413,8 +416,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		
 	}
@@ -422,11 +425,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public boolean checkPassCode(String email, String code) {
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_passcode WHERE cpc_email=? AND cpc_code=?";
 		try {
@@ -440,8 +443,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return false;
 	}
@@ -449,11 +452,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public boolean changePass(String email, String pass) {
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "UPDATE codingmon_member SET cm_pw=? WHERE cm_email=?";
 		try {
@@ -470,8 +473,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		
 		return false;
@@ -481,11 +484,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public boolean deleteMember(int num, String pw) {
 		boolean isDelete = false;
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "UPDATE codingmon_member SET cm_join=? WHERE cm_num=? AND cm_pw=?";
 		try {
@@ -498,8 +501,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 		
 		return isDelete;
@@ -509,11 +512,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public boolean deleteInfo(int num) {
 		boolean isDelete = false;
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "UPDATE codingmon_member_info SET cmi_private=? WHERE cmi_owner_num=?";
 		try {
@@ -526,8 +529,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 		
 		return isDelete;
@@ -538,11 +541,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void deleteJobs(int num) {
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "DELETE FROM codingmon_info_job WHERE cij_owner_num=?";
 		try {
@@ -553,8 +556,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 		
 	}
@@ -562,11 +565,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void deleteRegions(int num) {
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "DELETE FROM codingmon_member_region WHERE cmr_owner_num=?";
 		try {
@@ -577,19 +580,19 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 	}
 
 	@Override
 	public void deleteSubjects(int num) {
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "DELETE FROM codingmon_member_subject WHERE cms_owner_num=?";
 		try {
@@ -600,8 +603,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 	}
 
@@ -609,11 +612,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public int getMemberTotal() {
 		int totalCount = 0;
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT count(*) FROM codingmon_member";
 		try {
@@ -624,8 +627,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs,pstmt, conn);
-//			DBCPUtil.close(rs,pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs,pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return totalCount;
 	}
@@ -634,11 +637,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public int getInfoTotal() {
 		int totalCount = 0;
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT count(*) FROM codingmon_member_info";
 		try {
@@ -649,8 +652,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(pstmt, conn);
-//			DBCPUtil.close(pstmt, conn);
-			LaptopDBUtil.close(pstmt,conn);
+			DBCPUtil.close(pstmt, conn);
+//			LaptopDBUtil.close(pstmt,conn);
 		}
 		return totalCount;
 	}
@@ -660,11 +663,11 @@ public class MemberDAOImpl implements MemberDAO {
 		ArrayList<MemberVO> list = new ArrayList<>();
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_member ORDER BY cm_num DESC limit ?,?";
 		
@@ -689,9 +692,9 @@ public class MemberDAOImpl implements MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			TestDBUtil.close(rs,pstmt, conn);
-//			DBCPUtil.close(rs,pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+//			TestDBUtil.close(rs,pstmt, conn);
+			DBCPUtil.close(rs,pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		
 		return list;
@@ -702,11 +705,11 @@ public class MemberDAOImpl implements MemberDAO {
 		ArrayList<MemberInfo> list = new ArrayList<>();
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_member_info ORDER BY cmi_owner_num DESC limit ?,?";
 		
@@ -730,8 +733,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs,pstmt, conn);
-//			DBCPUtil.close(rs,pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs,pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return list;
 	}
@@ -741,11 +744,11 @@ public class MemberDAOImpl implements MemberDAO {
 		ArrayList<MemberJob> list = new ArrayList<>();
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_info_job WHERE cij_owner_num=? ORDER BY cij_code ASC";
 		
@@ -764,8 +767,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		
 		return list;
@@ -773,33 +776,33 @@ public class MemberDAOImpl implements MemberDAO {
 	
 
 	@Override
-	public ArrayList<String> getJobs(ArrayList<MemberJob> list) {
-		ArrayList<String> li = new ArrayList<>();
+	public HashMap<Integer, String> getJobs(ArrayList<MemberJob> list) {
+		HashMap<Integer, String> li = new HashMap<>();
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		try {
 			for(int i=0;i<list.size();i++) {
-				String sql = "SELECT cj_name FROM codingmon_job WHERE cj_code=?";
+				String sql = "SELECT * FROM codingmon_job WHERE cj_code=?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, list.get(i).getCij_code());
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
-					li.add(rs.getString(1));
+					li.put(rs.getInt("cj_code"), rs.getString("cj_name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return li;
 	}
@@ -809,11 +812,11 @@ public class MemberDAOImpl implements MemberDAO {
 		ArrayList<MemberRegion> list = new ArrayList<>();
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_member_region WHERE cmr_owner_num=? ORDER BY cmr_code ASC";
 		
@@ -831,40 +834,40 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return list;
 	}
 	
 	@Override
-	public ArrayList<String> getRegions(ArrayList<MemberRegion> list) {
-		ArrayList<String> li = new ArrayList<>();
+	public HashMap<Integer, String> getRegions(ArrayList<MemberRegion> list) {
+		HashMap<Integer, String> li = new HashMap<>();
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		try {
 			for(int i=0;i<list.size();i++) {
-				String sql = "SELECT cr_name FROM codingmon_region WHERE cr_code=?";
+				String sql = "SELECT * FROM codingmon_region WHERE cr_code=?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, list.get(i).getCmr_code());
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
-					li.add(rs.getString(1));
+					li.put(rs.getInt("cr_code"), rs.getString("cr_name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return li;
 	}
@@ -874,11 +877,11 @@ public class MemberDAOImpl implements MemberDAO {
 		ArrayList<MemberSubject> list = new ArrayList<>();
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		
 		String sql = "SELECT * FROM codingmon_member_subject WHERE cms_owner_num=? ORDER BY cms_category ASC, cms_code DESC";
 		
@@ -897,8 +900,8 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return list;
 	}
@@ -908,11 +911,11 @@ public class MemberDAOImpl implements MemberDAO {
 		HashMap<String, String> map = new HashMap<>();
 		
 		// 서버로 연결
-//		conn = DBCPUtil.getConnection();
+		conn = DBCPUtil.getConnection();
 		// 테스트용 연결
 //		conn = TestDBUtil.getConnection();
 		// 노트북용 연결
-		conn = LaptopDBUtil.getConnection();
+//		conn = LaptopDBUtil.getConnection();
 		// 주 언어 카운트
 		int mainCount = 1;
 		// 공부용 언어 카운트
@@ -940,9 +943,90 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 		}finally {
 //			TestDBUtil.close(rs, pstmt, conn);
-//			DBCPUtil.close(rs, pstmt, conn);
-			LaptopDBUtil.close(rs,pstmt,conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		return map;
 	}
+
+	@Override
+	public ArrayList<JobVO> getEntireJobs() {
+		ArrayList<JobVO> list = new ArrayList<>();
+		
+		// 서버로 연결
+		conn = DBCPUtil.getConnection();
+		
+		String sql = "SELECT * FROM codingmon_job ORDER BY cj_code ASC";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				JobVO job = new JobVO();
+				job.setCj_code(rs.getInt("cj_code"));
+				job.setCj_name(rs.getString("cj_name"));
+				list.add(job);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBCPUtil.close(rs,pstmt,conn);
+		}
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<RegionVO> getEntireRegions() {
+		ArrayList<RegionVO> list = new ArrayList<>();
+		
+		// 서버로 연결
+		conn = DBCPUtil.getConnection();
+		
+		String sql = "SELECT * FROM codingmon_region ORDER BY cr_code ASC";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				RegionVO reg = new RegionVO();
+				reg.setCr_code(rs.getInt("cr_code"));
+				reg.setCr_name(rs.getString("cr_name"));
+				list.add(reg);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBCPUtil.close(rs,pstmt,conn);
+		}
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<SubjectVO> getEntireSubjects() {
+		ArrayList<SubjectVO> list = new ArrayList<>();
+		
+		// 서버로 연결
+		conn = DBCPUtil.getConnection();
+		
+		String sql = "SELECT * FROM codingmon_subject ORDER BY cs_code ASC";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				SubjectVO sub = new SubjectVO();
+				sub.setCs_code(rs.getInt("cs_code"));
+				sub.setCs_name(rs.getString("cs_name"));
+				list.add(sub);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBCPUtil.close(rs,pstmt,conn);
+		}
+		
+		return list;
+	}
+	
+	
+	
 }

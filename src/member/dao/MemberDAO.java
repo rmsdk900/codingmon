@@ -5,9 +5,12 @@ import java.util.HashMap;
 
 import member.vo.MemberInfo;
 import member.vo.MemberVO;
+import member.vo.job.JobVO;
 import member.vo.job.MemberJob;
 import member.vo.region.MemberRegion;
+import member.vo.region.RegionVO;
 import member.vo.subject.MemberSubject;
+import member.vo.subject.SubjectVO;
 import util.Criteria;
 
 public interface MemberDAO {
@@ -67,13 +70,19 @@ public interface MemberDAO {
 	
 	// Read - 그 사람의 직업 번호 목록 검색
 	ArrayList<MemberJob> getJobList(int num);
-	ArrayList<String> getJobs(ArrayList<MemberJob> list);
+	HashMap<Integer, String> getJobs(ArrayList<MemberJob> list);
 	// Read - 그 사람의 선호 지역 번호 목록 검색
 	ArrayList<MemberRegion> getRegionList(int num);
-	ArrayList<String> getRegions(ArrayList<MemberRegion> list);
+	HashMap<Integer, String> getRegions(ArrayList<MemberRegion> list);
 	// Read - 그 사람의 주 언어 및 공부 언어 코드 검색
 	ArrayList<MemberSubject> getSubjectList(int num);
 	HashMap<String, String> getSubjects(ArrayList<MemberSubject> list);
+	
+	// 직업/지역/언어 전체 목록 불러오기
+	ArrayList<JobVO> getEntireJobs();
+	ArrayList<RegionVO> getEntireRegions();
+	ArrayList<SubjectVO> getEntireSubjects();
+	
 	
 	
 	// 검색 조건에 맞는 가입정보 갯수

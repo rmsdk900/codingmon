@@ -5,6 +5,43 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 날짜 입력창 관련 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script>
+  $(function(){
+     $.datepicker.setDefaults($.datepicker.regional['ko']);
+
+     $('#cmi_age').datepicker({
+          showOn: "both",                     // 달력을 표시할 타이밍 (both: focus or button)
+          buttonImage: "${pageContext.request.contextPath}"+"/"+"images/calendar.gif", // 버튼 이미지
+          buttonImageOnly : true,             // 버튼 이미지만 표시할지 여부
+          buttonText: "날짜선택",             // 버튼의 대체 텍스트
+          nextText: '다음 달',
+          prevText: '이전 달', 
+          dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+          dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+          monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+          monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+          dateFormat: "yymmdd",             // 날짜의 형식
+          changeYear: true,
+          changeMonth: true                 // 월을 이동하기 위한 선택상자 표시여부
+      });
+
+
+
+  });
+
+</script>
+<!-- -------- -->
+<style type="text/css">
+   
+     img.ui-datepicker-trigger {
+                margin-left:5px; vertical-align:middle; cursor:pointer;
+	}
+   
+</style>
 </head>
 <body>
 	<form action="insertInfo" method="post">
@@ -12,8 +49,8 @@
 		<table>
 			<tbody>
 				<tr>
-					<th>나이</th>
-					<td><input type="number" name="cmi_age" maxlength="3"/></td>
+					<th>생년월일</th>
+					<td><input type="text" id="cmi_age" name="cmi_age" required/></td>
 				</tr>
 				<tr>
 					<th>성별</th>
@@ -92,7 +129,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>지역</th>
+					<th>선호 지역</th>
 					<td>
 						<div>
 							<label>

@@ -31,9 +31,17 @@ public class MemberController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("MemberController GET 요청");
+		
+		MemberServiceImpl.loginCookie(request);
+		
 		String cmd = FactoryUtil.getCommand(request);
 		
 		String nextPage = null;
+		
+		if(cmd.equals("user/home")) {
+			System.out.println("홈 화면 가즈아");
+			nextPage = "/common/main.jsp";
+		}
 		
 		if(cmd.equals("user/join")) {
 			System.out.println("회원가입 화면 호출");
@@ -45,9 +53,24 @@ public class MemberController extends HttpServlet {
 			nextPage = "/member/login.jsp";
 		}
 		
+		if(cmd.equals("user/logout")) {
+			System.out.println("로그아웃 시도");
+			service.logOut(request, response);
+		}
+		
+		if(cmd.equals("user/myInfo")) {
+			System.out.println("내 정보 화면 요청");
+			nextPage = "/member/userInfo.jsp";
+		}
+		
 		if(cmd.equals("user/findPw")) {
 			System.out.println("비밀번호 찾기 화면 호출");
 			nextPage = "/member/findPass.jsp";
+		}
+		
+		if(cmd.equals("user/updateInfo")) {
+			System.out.println("내정보 수정을 위한 비밀번호 확인 화면 호출");
+			nextPage = "/member/checkPw.jsp";
 		}
 		
 		FactoryUtil.nextPage(request, response, nextPage);
@@ -58,6 +81,9 @@ public class MemberController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
+		MemberServiceImpl.loginCookie(request);
+		
 		System.out.println("MemberController POST 요청");
 		String cmd = FactoryUtil.getCommand(request);
 		System.out.println("post 요청 uri : "+cmd);
@@ -91,8 +117,10 @@ public class MemberController extends HttpServlet {
 			boolean isLogin = service.memberLogin(request, response);
 			if(isLogin) {
 				System.out.println("로그인 성공");
+				response.sendRedirect(request.getContextPath()+"/");
 			}else {
 				System.out.println("로그인 실패");
+				nextPage = "/member/login.jsp";
 			}
 		}
 		
@@ -121,6 +149,12 @@ public class MemberController extends HttpServlet {
 			System.out.println("비밀번호 변경 요청");
 			service.changePw(request, response);
 			
+		}
+		
+		if(cmd.equals("user/infoUpdate")) {
+			System.out.println("부가 정보 수정 화면 요청");
+			service.getMyInfo(request);
+			nextPage = "/member/infoUpdate.jsp";
 		}
 		
 		FactoryUtil.nextPage(request, response, nextPage);

@@ -2,7 +2,9 @@ package member.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -20,9 +22,12 @@ import member.dao.MemberDAO;
 import member.dao.MemberDAOImpl;
 import member.vo.MemberInfo;
 import member.vo.MemberVO;
+import member.vo.job.JobVO;
 import member.vo.job.MemberJob;
 import member.vo.region.MemberRegion;
+import member.vo.region.RegionVO;
 import member.vo.subject.MemberSubject;
+import member.vo.subject.SubjectVO;
 import util.GoogleAuthenticator;
 import util.UserSha256;
 
@@ -60,6 +65,7 @@ public class MemberServiceImpl implements MemberService {
 		int cmi_owner_num = Integer.parseInt(request.getParameter("cm_num"));
 		String cmi_intro = request.getParameter("cmi_intro");
 		String cmi_gender = request.getParameter("cmi_gender");
+		System.out.println(request.getParameter("cmi_age"));
 		int cmi_age = Integer.parseInt(request.getParameter("cmi_age"));
 		String cmi_career = request.getParameter("cmi_career");
 		String cmi_private = request.getParameter("cmi_private");
@@ -138,16 +144,13 @@ public class MemberServiceImpl implements MemberService {
 		String inputPw = request.getParameter("cm_pw");
 		String autoLogin = request.getParameter("cm_auto");
 		boolean isAuto = false;
-		if(autoLogin.equals("on")) {
+		if(autoLogin != null && autoLogin.equals("on")) {
 			isAuto = true;
 		}
 		// 소금 가져오기
 		int salt = dao.getSalt(email);
 		
-		
 		String encryPw = UserSha256.encrypt(inputPw+salt);
-		
-		
 		
 		MemberVO member = dao.loginMember(email, encryPw);
 		// null이라면 실패 
@@ -167,11 +170,88 @@ public class MemberServiceImpl implements MemberService {
 		}else {
 			System.out.println("로그인 실패");
 		}
-		
-		
 		return isLogin;
 	}
-
+	
+	public static void loginCookie(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("member")==null) {
+			Cookie[] cookies = request.getCookies();
+			if(cookies != null) {
+				for(Cookie c : cookies) {
+					if(c.getName().equals("cm_email")) {
+						String cm_email = c.getValue();
+						System.out.println("쿠키 내의 이메일 정보 : "+cm_email);
+						MemberDAO dao = new MemberDAOImpl();
+						MemberVO member = dao.getMemberByEmail(cm_email);
+						if(member != null) {
+							session.setAttribute("member", member);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void logOut(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		System.out.println("세션 초기화 완료");
+		
+		Cookie cookie = new Cookie("cm_email", "");
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		System.out.println("쿠키 삭제 완료");
+		
+		
+		try {
+			response.sendRedirect(request.getContextPath()+"/");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void getMyInfo(HttpServletRequest request) {
+		String num = request.getParameter("cm_num");
+		int cm_num = Integer.parseInt(num);
+		// 정보도 같이 들고 오자
+		MemberInfo info = dao.getInfoByNum(cm_num);
+		System.out.println(cm_num+"번 회원의 정보 리스트 : "+info);
+		// 직업, 지역, 언어 정보도
+		ArrayList<MemberJob> userJobCodes = dao.getJobList(cm_num);
+		HashMap<Integer, String> userJobs = dao.getJobs(userJobCodes); 
+//		ArrayList<String> userJobs = dao.getJobs(userJobCodes);
+		System.out.println(cm_num+"번 회원의 직업 리스트 : "+userJobs);
+		
+		ArrayList<MemberRegion> userRegionCodes = dao.getRegionList(cm_num);
+		HashMap<Integer, String> userRegions = dao.getRegions(userRegionCodes);
+		System.out.println(cm_num+"번 회원의 선호 지역 리스트 : "+userRegions);
+					
+		ArrayList<MemberSubject> userSubjectCodes = dao.getSubjectList(cm_num);
+		HashMap<String, String> userSubjects = dao.getSubjects(userSubjectCodes);
+		System.out.println("언어 리스트 정리"+userSubjectCodes);
+		System.out.println(cm_num+"번 회원의 언어 리스트 : "+userSubjects);
+		
+		// 데이터베이스에 저장된 애들도 불러와!
+		ArrayList<JobVO> entireJobs = dao.getEntireJobs();
+		ArrayList<RegionVO> entireRegions = dao.getEntireRegions();
+		ArrayList<SubjectVO> entireSubjects = dao.getEntireSubjects();
+		
+		
+		request.setAttribute("info", info);
+		request.setAttribute("userJobs", userJobs);
+		request.setAttribute("userRegions", userRegions);
+		request.setAttribute("userSubjects", userSubjectCodes);
+		
+		request.setAttribute("ej", entireJobs);
+		request.setAttribute("er", entireRegions);
+		request.setAttribute("es", entireSubjects);
+		
+	}
+	
 	@Override
 	public void sendPasscode(HttpServletRequest request, HttpServletResponse response) {
 		String cm_email = request.getParameter("cm_email");
@@ -276,6 +356,57 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		
+	}
+	
+	@Override
+	public boolean checkId(HttpServletRequest request) {
+		boolean isDuplicated = false;
+		
+		String cm_email = request.getParameter("cm_email");
+		System.out.println(cm_email);
+		
+		MemberVO member = dao.getMemberByEmail(cm_email);
+		if(member != null)isDuplicated = true;
+		
+		return isDuplicated;
+	}
+	
+	@Override
+	public boolean loginCheckAsync(HttpServletRequest request) {
+		boolean isOk = false;
+		
+		String email = request.getParameter("cm_email");
+		String inputPw = request.getParameter("cm_pw");
+		
+		// 소금 가져오기
+		int salt = dao.getSalt(email);
+				
+		String encryPw = UserSha256.encrypt(inputPw+salt);
+				
+		MemberVO member = dao.loginMember(email, encryPw);
+		
+		if(member != null)isOk = true;
+		
+		return isOk;
+	}
+	
+	@Override
+	public boolean checkPwAsync(HttpServletRequest request) {
+		boolean isRight = false;
+		
+		String email = request.getParameter("cm_email");
+		String inputPw = request.getParameter("cm_pw");
+		
+		// 소금 가져오기
+		int salt = dao.getSalt(email);
+				
+		String encryPw = UserSha256.encrypt(inputPw+salt);
+				
+		MemberVO member = dao.loginMember(email, encryPw);
+		
+		if(member != null)isRight = true;
+		
+		return isRight;
 	}
 	
 	// 염전 
