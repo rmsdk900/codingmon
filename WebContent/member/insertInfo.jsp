@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,10 +46,15 @@
 </style>
 </head>
 <body>
-	<form action="insertInfo" method="post">
+	<form id="insertInfoForm" action="insertInfo" method="post">
 		<input type="hidden" name="cm_num" value="${requestScope.joinMember.cm_num}"/>
-		<table>
+		<h1>이력서 입력</h1>
+		<table border=1>
 			<tbody>
+				<tr>
+					<th>제목</th>
+					<td><input type="text" id="cmi_title" name="cmi_title" placeholder="기본 : ${requestScope.joinMember.cm_name}의 이력서"/></td>
+				</tr>
 				<tr>
 					<th>생년월일</th>
 					<td><input type="text" id="cmi_age" name="cmi_age" required/></td>
@@ -69,62 +76,12 @@
 					<th>직업</th>
 					<td>
 						<div>
-							<label>
-								<input type="checkbox" name="cij_code" value="1"/>
-								프론트엔드
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="2"/>
-								백엔드
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="3"/>
-								풀 스택
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="4"/>
-								모바일
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="5"/>
-								데이터&머신러닝 전문가
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="6"/>
-								데스크탑 어플리케이션
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="7"/>
-								게임
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="8"/>
-								임베디드 어플리케이션
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="101"/>
-								시스템 관리자
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="102"/>
-								CEO/CTO
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="103"/>
-								제품 또는 기술 매니저
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="104"/>
-								교육가
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="105"/>
-								학생
-							</label>
-							<label>
-								<input type="checkbox" name="cij_code" value="999"/>
-								기타
-							</label>
+							<c:forEach var="i" items="${requestScope.ej}">
+										<label>
+											<input type="checkbox" class="cij_code" name="cij_code" value="${i.cj_code}"/>
+											${i.cj_name}
+										</label>
+								</c:forEach>
 						</div>
 					</td>
 				</tr>
@@ -132,82 +89,12 @@
 					<th>선호 지역</th>
 					<td>
 						<div>
-							<label>
-								<input type="checkbox" name="cmr_code" value="1"/>
-								서울특별시
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="2"/>
-								부산광역시
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="3"/>
-								대구광역시
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="4"/>
-								인천광역시
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="5"/>
-								광주광역시
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="6"/>
-								대전광역시
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="7"/>
-								울산광역시
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="8"/>
-								세종특별자치시
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="9"/>
-								경기도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="10"/>
-								강원도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="11"/>
-								충청북도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="12"/>
-								충청남도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="13"/>
-								전라북도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="14"/>
-								전라남도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="15"/>
-								경상북도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="16"/>
-								경상남도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="17"/>
-								제주특별자치도
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="99"/>
-								전국
-							</label>
-							<label>
-								<input type="checkbox" name="cmr_code" value="100"/>
-								해외
-							</label>
+							<c:forEach var="i" items="${requestScope.er}">
+										<label>
+											<input type="checkbox" name="cmr_code" value="${i.cr_code}"/>
+											${i.cr_name}
+										</label>
+							</c:forEach>
 						</div>
 					</td>
 				</tr>
@@ -216,74 +103,58 @@
 					<td>
 						<div>
 							<h3>Java</h3>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="1"/>
-								Java
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="2"/>
-								Spring
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="3"/>
-								전자정부표준
-							</label>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 1}">
+									<label>
+										<input type="checkbox" name="cms_code_work" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 						<div>
-							<h3>C</h3>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="11"/>
-								C
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="12"/>
-								C++
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="13"/>
-								C#
-							</label>
+							<h3>C 언어</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 2}">
+									<label>
+										<input type="checkbox" name="cms_code_work" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 						<div>
 							<h3>Javascript</h3>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="21"/>
-								Vanila JS
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="22"/>
-								Vue
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="23"/>
-								Angular
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="24"/>
-								React
-							</label>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 3}">
+									<label>
+										<input type="checkbox" name="cms_code_work" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 						<div>
 							<h3>Python</h3>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="31"/>
-								Python
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="32"/>
-								Flask
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="33"/>
-								Django
-							</label>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 4}">
+									<label>
+										<input type="checkbox" name="cms_code_work" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 						<div>
 							<h3>ETC</h3>
-							<label>
-								<input type="checkbox" name="cms_code_work" value="91"/>
-								Ruby
-							</label>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 5}">
+									<label>
+										<input type="checkbox" name="cms_code_work" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 					</td>
 				</tr>
@@ -292,74 +163,58 @@
 					<td>
 						<div>
 							<h3>Java</h3>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="1"/>
-								Java
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="2"/>
-								Spring
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="3"/>
-								전자정부표준
-							</label>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 1}">
+									<label>
+										<input type="checkbox" name="cms_code_learning" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 						<div>
-							<h3>C</h3>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="11"/>
-								C
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="12"/>
-								C++
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="13"/>
-								C#
-							</label>
+							<h3>C 언어</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 2}">
+									<label>
+										<input type="checkbox" name="cms_code_learning" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 						<div>
 							<h3>Javascript</h3>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="21"/>
-								Vanila JS
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="22"/>
-								Vue
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="23"/>
-								Angular
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="24"/>
-								React
-							</label>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 3}">
+									<label>
+										<input type="checkbox" name="cms_code_learning" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 						<div>
 							<h3>Python</h3>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="31"/>
-								Python
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="32"/>
-								Flask
-							</label>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="33"/>
-								Django
-							</label>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 4}">
+									<label>
+										<input type="checkbox" name="cms_code_learning" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 						<div>
 							<h3>ETC</h3>
-							<label>
-								<input type="checkbox" name="cms_code_learning" value="91"/>
-								Ruby
-							</label>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 5}">
+									<label>
+										<input type="checkbox" name="cms_code_learning" value="${i.cs_code}"/>
+										${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
 						</div>
 					</td>
 				</tr>
@@ -390,7 +245,7 @@
 				</tr>
 				<tr>
 					<td colspan=2>
-						<input type="submit" value="작성 완료"/>
+						<input type="button" id="infoSubmit" value="작성 완료"/>
 						<input type="reset" value="수정"/>
 					</td>
 				</tr>
@@ -398,4 +253,13 @@
 		</table>
 	</form>
 </body>
+<script>
+	document.getElementById("infoSubmit").addEventListener("click", function(){
+		var cmi_title = document.getElementById("cmi_title").value;
+		if(cmi_title == "" || cmi_title == null){
+			cmi_title = "${requestScope.joinMember.cm_name}의 이력서";
+		}
+		document.getElementById("insertInfoForm").submit();
+	});
+</script>
 </html>

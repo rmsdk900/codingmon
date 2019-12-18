@@ -73,6 +73,16 @@ public class MemberController extends HttpServlet {
 			nextPage = "/member/checkPw.jsp";
 		}
 		
+		if(cmd.equals("user/updatePw")) {
+			System.out.println("비밀번호 변경 화면 호출");
+			nextPage = "/member/updatePw.jsp";
+		}
+		
+		if(cmd.equals("user/deleteMember")) {
+			System.out.println("회원탈퇴 화면 호출");
+			nextPage="/member/deleteMember.jsp";
+		}
+		
 		FactoryUtil.nextPage(request, response, nextPage);
 	}
 
@@ -94,6 +104,7 @@ public class MemberController extends HttpServlet {
 			boolean isSignUp = service.memberSignUp(request);
 			if(isSignUp) {
 				System.out.println("회원가입 성공");
+				service.getFullReSource(request);
 				nextPage="/member/insertInfo.jsp";
 			}else {
 				System.out.println("회원가입 실패");
@@ -155,6 +166,23 @@ public class MemberController extends HttpServlet {
 			System.out.println("부가 정보 수정 화면 요청");
 			service.getMyInfo(request);
 			nextPage = "/member/infoUpdate.jsp";
+		}
+		
+		if(cmd.equals("user/updateInfoSubmit")) {
+			System.out.println("부가 정보 수정 처리");
+			service.updateInfo(request, response);
+		}
+		
+		
+		
+		if(cmd.equals("user/updatePwSubmit")) {
+			System.out.println("비밀번호 변경 처리");
+			service.updatePw(request, response);
+		}
+		
+		if(cmd.equals("user/deleteMemberSubmit")) {
+			System.out.println("회원 탈퇴 처리");
+			service.deleteMember(request, response);
 		}
 		
 		FactoryUtil.nextPage(request, response, nextPage);

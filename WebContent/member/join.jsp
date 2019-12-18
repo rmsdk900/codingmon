@@ -26,7 +26,7 @@
 					<td></td>
 					<td>
 						<div id="id-use">아이디를 사용할 수 있습니다.</div>
-						<div id="id-duplicated">중복된 아이디가 존재합니다.</div>
+						<div id="id-duplicated">중복된 아이디 혹은 탈퇴한 회원의 아이디입니다.</div>
 					</td>
 				</tr>
 				<tr>
@@ -50,7 +50,11 @@
 				</tr>
 				<tr>
 					<td>휴대폰 번호</td>
-					<td><input type="text" name="cm_phone"  required/></td>
+					<td>
+						<input type="text" name="cm_phone_first"/> -
+						<input type="text" name="cm_phone_middle"/> -
+						<input type="text" name="cm_phone_last"/>
+					</td>
 				</tr>
 				<tr>
 					<td>주소</td>
@@ -104,13 +108,15 @@
 						$("#id-duplicated").hide();
 						$("#submit").removeAttr("disabled");
 					}
+				},
+				error: function(request,status,error){
+					console.log("AJAX 실패");
 				}
 			});
 		});
 	});
 	
 </script>
-
 </html>
 <!-- 회원가입 -->
 

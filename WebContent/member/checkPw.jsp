@@ -46,8 +46,8 @@
 			type: 'POST',
 			url: "${pageContext.request.contextPath}/checkPw.async",
 			data: {
-				cm_pw: $("#cm_pw").val(),
-				cm_email: '${sessionScope.member.cm_email}'
+				cur_pw: $("#cm_pw").val(),
+				cm_num: '${param.cm_num}'
 			},
 			dataType: "json",
 			success: function(data){

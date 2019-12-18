@@ -45,6 +45,8 @@
 	<tr>
 		<td colspan=2>
 			<input type="button" onclick="javascript:updateInfo()" value="수정" />
+			<input type="button" onclick="javascript:changePw()" value="비밀번호 변경" />
+			<input type="button" onclick="javascript:deleteMember()" value="회원탈퇴" />
 		</td>
 	</tr>
 </tbody>
@@ -53,6 +55,12 @@
 <script>
 	function updateInfo(){
 		location.href='updateInfo?cm_num=${sessionScope.member.cm_num}';
+	}
+	function changePw(){
+		location.href='updatePw?cm_num=${sessionScope.member.cm_num}';
+	}
+	function deleteMember(){
+		location.href='deleteMember?cm_num=${sessionScope.member.cm_num}';
 	}
 </script>
 </html>

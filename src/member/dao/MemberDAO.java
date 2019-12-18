@@ -28,12 +28,15 @@ public interface MemberDAO {
 	
 	// 로그인
 	MemberVO loginMember(String email, String pass);
+	// cm_num으로 가입 정보 가져오기
+	MemberVO getMemberByNum(int num);
 	// email로 가입 정보 가져오기
 	MemberVO getMemberByEmail(String email);
 	// 회원번호로 부가 정보 가져오기
 	MemberInfo getInfoByNum(int num);
 	// 소금 가져오기
 	int getSalt(String email);
+	int getSalt(int cm_num);
 	
 	
 	// 가입 정보 수정
@@ -47,6 +50,7 @@ public interface MemberDAO {
 	boolean checkPassCode(String email, String code);
 	// 비밀번호 변경
 	boolean changePass(String email, String pass);
+	boolean changePass(int cm_num, String encryPw);
 	
 	// 회원 탈퇴 회원번호와 비밀번호 필요
 	boolean deleteMember(int num, String pw);
@@ -82,6 +86,10 @@ public interface MemberDAO {
 	ArrayList<JobVO> getEntireJobs();
 	ArrayList<RegionVO> getEntireRegions();
 	ArrayList<SubjectVO> getEntireSubjects();
+	// 암호 있는 지 확인하는 것
+	boolean existPw(int cm_num, String encryPw);
+	
+	
 	
 	
 	

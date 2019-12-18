@@ -8,18 +8,10 @@ public class MemberInfo {
 	private int cmi_age;
 	private String cmi_career;
 	private int cmi_achieve;
+	private String cmi_title;
 	
 	public MemberInfo() {}
-	public MemberInfo(int cmi_owner_num, String cmi_intro, String cmi_private, String cmi_gender,
-			int cmi_age, String cmi_career, int cmi_achieve) {
-		this.cmi_owner_num = cmi_owner_num;
-		this.cmi_intro = cmi_intro;
-		this.cmi_private = cmi_private;
-		this.cmi_gender = cmi_gender;
-		this.cmi_age = cmi_age;
-		this.cmi_career = cmi_career;
-		this.cmi_achieve = cmi_achieve;
-	}
+	
 	public int getCmi_owner_num() {
 		return cmi_owner_num;
 	}
@@ -62,13 +54,20 @@ public class MemberInfo {
 	public void setCmi_achieve(int cmi_achieve) {
 		this.cmi_achieve = cmi_achieve;
 	}
+
+	public String getCmi_title() {
+		return cmi_title;
+	}
+
+	public void setCmi_title(String cmi_title) {
+		this.cmi_title = cmi_title;
+	}
+
 	@Override
 	public String toString() {
-		return "MemberInfo [cmi_owner_num=" + cmi_owner_num + ", cmi_intro=" + cmi_intro
-				+ ", cmi_private=" + cmi_private + ", cmi_gender=" + cmi_gender + ", cmi_age=" + cmi_age
-				+ ", cmi_career=" + cmi_career + ", cmi_achieve=" + cmi_achieve + "]";
+		return "MemberInfo [cmi_owner_num=" + cmi_owner_num + ", cmi_intro=" + cmi_intro + ", cmi_private="
+				+ cmi_private + ", cmi_gender=" + cmi_gender + ", cmi_age=" + cmi_age + ", cmi_career=" + cmi_career
+				+ ", cmi_achieve=" + cmi_achieve + ", cmi_title=" + cmi_title + "]";
 	}
-	
-	
 	
 }

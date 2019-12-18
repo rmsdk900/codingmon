@@ -4,7 +4,7 @@
 		name="jdbc/MysqlDB" 
 		auth="container"
 		type="javax.sql.DataSource"
-		factory="org.apache.tomcat.jdbc.pool.Da11taSourceFactory" 
+		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
 		driverClassName="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/codingmondb?useSSL=false"  
 		username="myjava"

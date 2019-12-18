@@ -48,6 +48,7 @@ public class AsyncMemberServlet extends HttpServlet {
 			json = gson.toJson(service.checkPwAsync(request));
 		}
 		
+		
 		response.setContentType("application/json;charset=utf-8");
 		response.getWriter().print(json);
 		

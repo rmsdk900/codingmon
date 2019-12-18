@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
 		String email = request.getParameter("cm_email");
 		String pw = request.getParameter("cm_pw");
 		String name = request.getParameter("cm_name");
-		String phone = request.getParameter("cm_phone");
+		String phone = request.getParameter("cm_phone_first")+request.getParameter("cm_phone_middle")+request.getParameter("cm_phone_last");
 		String addr = request.getParameter("cm_addr");
 		int salt = makingSalt();
 		String encryPassword = UserSha256.encrypt(pw+salt);
@@ -63,6 +63,7 @@ public class MemberServiceImpl implements MemberService {
 	public void insertInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 정보 넣기
 		int cmi_owner_num = Integer.parseInt(request.getParameter("cm_num"));
+		String cmi_title = request.getParameter("cmi_title");
 		String cmi_intro = request.getParameter("cmi_intro");
 		String cmi_gender = request.getParameter("cmi_gender");
 		System.out.println(request.getParameter("cmi_age"));
@@ -73,6 +74,7 @@ public class MemberServiceImpl implements MemberService {
 		MemberInfo info = new MemberInfo();
 		
 		info.setCmi_owner_num(cmi_owner_num);
+		info.setCmi_title(cmi_title);
 		info.setCmi_intro(cmi_intro);
 		info.setCmi_gender(cmi_gender);
 		info.setCmi_age(cmi_age);
@@ -219,7 +221,7 @@ public class MemberServiceImpl implements MemberService {
 		int cm_num = Integer.parseInt(num);
 		// 정보도 같이 들고 오자
 		MemberInfo info = dao.getInfoByNum(cm_num);
-		System.out.println(cm_num+"번 회원의 정보 리스트 : "+info);
+		System.out.println(cm_num+"번 회원의 이력서 리스트 : "+info);
 		// 직업, 지역, 언어 정보도
 		ArrayList<MemberJob> userJobCodes = dao.getJobList(cm_num);
 		HashMap<Integer, String> userJobs = dao.getJobs(userJobCodes); 
@@ -245,6 +247,19 @@ public class MemberServiceImpl implements MemberService {
 		request.setAttribute("userJobs", userJobs);
 		request.setAttribute("userRegions", userRegions);
 		request.setAttribute("userSubjects", userSubjectCodes);
+		
+		request.setAttribute("ej", entireJobs);
+		request.setAttribute("er", entireRegions);
+		request.setAttribute("es", entireSubjects);
+		
+	}
+	
+	@Override
+	public void getFullReSource(HttpServletRequest request) {
+		// 데이터베이스에 저장된 애들도 불러와!
+		ArrayList<JobVO> entireJobs = dao.getEntireJobs();
+		ArrayList<RegionVO> entireRegions = dao.getEntireRegions();
+		ArrayList<SubjectVO> entireSubjects = dao.getEntireSubjects();
 		
 		request.setAttribute("ej", entireJobs);
 		request.setAttribute("er", entireRegions);
@@ -391,25 +406,195 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public boolean checkPwAsync(HttpServletRequest request) {
-		boolean isRight = false;
+	public void updateInfo(HttpServletRequest request, HttpServletResponse response) {
 		
-		String email = request.getParameter("cm_email");
-		String inputPw = request.getParameter("cm_pw");
+		int cm_num = Integer.parseInt(request.getParameter("cm_num"));
+		
+		String cm_phone = request.getParameter("cm_phone_first")+request.getParameter("cm_phone_middle")+request.getParameter("cm_phone_last");
+		String cm_addr = request.getParameter("cm_addr");
+		
+		MemberVO vo = new MemberVO();
+		vo.setCm_num(cm_num);
+		vo.setCm_phone(cm_phone);
+		vo.setCm_addr(cm_addr);
+		boolean isMember = dao.updateMember(vo);
+		
+		
+		String cmi_career = request.getParameter("cmi_career");
+		String cmi_title = request.getParameter("cmi_title");
+		String cmi_intro = request.getParameter("cmi_intro");
+		String cmi_private = request.getParameter("cmi_private");
+		
+		MemberInfo info = new MemberInfo();
+		info.setCmi_owner_num(cm_num);
+		info.setCmi_title(cmi_title);
+		info.setCmi_career(cmi_career);
+		info.setCmi_intro(cmi_intro);
+		info.setCmi_private(cmi_private);
+		
+		boolean isInfo = dao.updateInfo(info);
+		
+		try {
+			if(isMember && isInfo) {
+				System.out.println("가입 정보 및 부가 정보 수정 완료");
+				// 있던 것들 삭제하기.
+				dao.deleteJobs(cm_num);
+				dao.deleteRegions(cm_num);
+				dao.deleteSubjects(cm_num);
+				
+				// 없앤 곳에 새로 넣기. 
+				String[] jobs = request.getParameterValues("cij_code");
+				for(String job : jobs) {
+					MemberJob mj = new MemberJob();
+					int code = Integer.parseInt(job);
+					mj.setCij_code(code);
+					mj.setCij_owner_num(cm_num);
+					dao.insertJob(mj);
+				}
+						
+				// 지역 넣기 복수 응답 고려
+				String[] regions = request.getParameterValues("cmr_code");
+				for(String region : regions) {
+					MemberRegion mr = new MemberRegion();
+					int code = Integer.parseInt(region);
+					mr.setCmr_code(code);
+					mr.setCmr_owner_num(cm_num);
+					dao.insertRegion(mr);
+				}
+						
+				// 언어 정보 입력. 복수 응답 고려 - 주 언어 
+				String[] majors = request.getParameterValues("cms_code_work");
+				for(String major : majors) {
+					MemberSubject ms = new MemberSubject();
+					int code = Integer.parseInt(major);
+					ms.setCms_category(0);
+					ms.setCms_code(code);
+					ms.setCms_owner_num(cm_num);
+					dao.insertSubject(ms);
+				}
+						
+				// 언어 정보 입력. 복수 응답 고려 - 학습 중인 언어
+				String[] learnings = request.getParameterValues("cms_code_learning");
+				for(String learning : learnings) {
+					MemberSubject ms = new MemberSubject();
+					int code = Integer.parseInt(learning);
+					ms.setCms_category(1);
+					ms.setCms_code(code);
+					ms.setCms_owner_num(cm_num);
+					dao.insertSubject(ms);
+				}
+				// 세션에 새로운 member 불러와서 저장하자. 
+				MemberVO member = dao.getMemberByNum(cm_num);
+				HttpSession session = request.getSession();
+				session.setAttribute("member", member);
+				// home으로 가자. 
+				response.sendRedirect("home");
+				
+			}else {
+				System.out.println("가입 정보 및 부가정보 수정 실패");
+				// 부가정보 입력 페이지로 다시 넘어가기
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.print("<script>");
+				out.print("alert('회원 정보 수정에 실패하셨습니다!');");
+				out.print("history.go(-1);");
+				out.print("</script>");
+				
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+
+	}
+	
+	
+	@Override
+	public boolean checkPwAsync(HttpServletRequest request) {
+
+		
+		int cm_num = Integer.parseInt(request.getParameter("cm_num"));
+		
+		String inputPw = request.getParameter("cur_pw");
 		
 		// 소금 가져오기
-		int salt = dao.getSalt(email);
+		int salt = dao.getSalt(cm_num);
 				
 		String encryPw = UserSha256.encrypt(inputPw+salt);
 				
-		MemberVO member = dao.loginMember(email, encryPw);
+		boolean isPass = dao.existPw(cm_num, encryPw);
 		
-		if(member != null)isRight = true;
-		
-		return isRight;
+		return isPass;
 	}
 	
-	// 염전 
+	@Override
+	public void updatePw(HttpServletRequest request, HttpServletResponse response) {
+		int cm_num = Integer.parseInt(request.getParameter("cm_num"));
+		String new_pw = request.getParameter("cm_pw");
+		
+		// 소금 가져오기
+		int salt = dao.getSalt(cm_num);
+						
+		String encryPw = UserSha256.encrypt(new_pw+salt);
+		
+		boolean updatePw = dao.changePass(cm_num, encryPw);
+		
+		try {
+			if(updatePw) {
+				System.out.println("비밀번호 변경 성공");
+				// 세션에 새로운 member 불러와서 저장하자. 
+				MemberVO member = dao.getMemberByNum(cm_num);
+				HttpSession session = request.getSession();
+				session.setAttribute("member", member);
+				// home으로 가자. 
+				response.sendRedirect("home");
+			}else {
+				System.out.println("비밀번호 변경 실패");
+				// 부가정보 입력 페이지로 다시 넘어가기
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.print("<script>");
+				out.print("alert('비밀번호 변경에 실패하셨습니다!');");
+				out.print("location.href='home';");
+				out.print("</script>");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void deleteMember(HttpServletRequest request, HttpServletResponse response) {
+		int cm_num = Integer.parseInt(request.getParameter("cm_num"));
+		String cm_pw = request.getParameter("cm_pw");
+		
+		// 소금 가져오기
+		int salt = dao.getSalt(cm_num);			
+		String encryPw = UserSha256.encrypt(cm_pw+salt);
+		
+		// 회원 탈퇴
+		boolean withdrawal = dao.deleteMember(cm_num, encryPw);
+		if(withdrawal) {
+			// 부가정보도 보이지 않게 하기
+			dao.deleteInfo(cm_num);
+			// 로그아웃 하기 
+			logOut(request, response);
+			System.out.println("회원탈퇴 및 로그아웃");
+		}else {
+			System.out.println("회원탈퇴 실패");
+			try {
+				response.sendRedirect("home");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	// 염전 천일염 짠 소금 원소기호 13번 Na 
 	int makingSalt(){
 		int salt = 0;
 		

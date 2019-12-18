@@ -18,18 +18,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form>
+	<form action="updateInfoSubmit" method="POST">
 		<input type="hidden" name="cm_num" value="${sessionScope.member.cm_num}"/>
-		<table>
+		<h1>이력서 수정</h1>
+		<table border=1>
 			<tbody>
 			<c:choose>
 				<c:when test="${!empty requestScope.info 
 				&& !empty requestScope.userJobs
 				&& !empty requestScope.userRegions
 				&& !empty requestScope.userSubjects
-				}">
+				}">	
 					<tr>
-						<th colspan=2>부가 정보 수정</th>
+						<th>이력서 제목</th>
+						<td><input type="text" name="cmi_title" value="${requestScope.info.cmi_title}"/></td>
 					</tr>
 					<tr>
 						<th>이메일(아이디)</th>
@@ -77,7 +79,6 @@
 											/>
 											${i.cj_name}
 										</label>
-									
 								</c:forEach>
 							</div>
 						</td>
@@ -103,8 +104,10 @@
 						<th>주 언어</th>
 						<td>
 							<div>
-								<c:forEach var="i" items="${requestScope.es}">
-											<label>
+							<h3>Java</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 1}">
+									<label>
 												<input type="checkbox" name="cms_code_work" value="${i.cs_code}" 
 										<c:forEach var="j" items="${requestScope.userSubjects}">
 										<c:if test="${j.cms_category eq 0}">
@@ -113,18 +116,88 @@
 										</c:forEach>
 												/>
 												${i.cs_name}
-											</label>
-										
-								</c:forEach>
-							</div>
+									</label>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div>
+							<h3>C 언어</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 2}">
+									<label>
+												<input type="checkbox" name="cms_code_work" value="${i.cs_code}" 
+										<c:forEach var="j" items="${requestScope.userSubjects}">
+										<c:if test="${j.cms_category eq 0}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+										</c:if>
+										</c:forEach>
+												/>
+												${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div>
+							<h3>Javascript</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 3}">
+									<label>
+												<input type="checkbox" name="cms_code_work" value="${i.cs_code}" 
+										<c:forEach var="j" items="${requestScope.userSubjects}">
+										<c:if test="${j.cms_category eq 0}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+										</c:if>
+										</c:forEach>
+												/>
+												${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div>
+							<h3>Python</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 4}">
+									<label>
+												<input type="checkbox" name="cms_code_work" value="${i.cs_code}" 
+										<c:forEach var="j" items="${requestScope.userSubjects}">
+										<c:if test="${j.cms_category eq 0}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+										</c:if>
+										</c:forEach>
+												/>
+												${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div>
+							<h3>ETC</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 5}">
+									<label>
+												<input type="checkbox" name="cms_code_work" value="${i.cs_code}" 
+										<c:forEach var="j" items="${requestScope.userSubjects}">
+										<c:if test="${j.cms_category eq 0}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+										</c:if>
+										</c:forEach>
+												/>
+												${i.cs_name}
+									</label>
+								</c:if>
+							</c:forEach>
+						</div>
 						</td>
 					</tr>
 					<tr>
-						<th>공부용 언어</th>
+						<th>학습 중인 언어</th>
 						<td>
 							<div>
-								<c:forEach var="i" items="${requestScope.es}">
-s											<label>
+							<h3>Java</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 1}">
+									<label>
 												<input type="checkbox" name="cms_code_learning" value="${i.cs_code}" 
 											<c:forEach var="j" items="${requestScope.userSubjects}">
 												<c:if test="${j.cms_category eq 1}">
@@ -134,8 +207,77 @@ s											<label>
 												/>
 												${i.cs_name}
 											</label>
-								</c:forEach>
-							</div>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div>
+							<h3>C 언어</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 2}">
+									<label>
+												<input type="checkbox" name="cms_code_learning" value="${i.cs_code}" 
+											<c:forEach var="j" items="${requestScope.userSubjects}">
+												<c:if test="${j.cms_category eq 1}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+												</c:if>
+											</c:forEach>
+												/>
+												${i.cs_name}
+											</label>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div>
+							<h3>Javascript</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 3}">
+									<label>
+												<input type="checkbox" name="cms_code_learning" value="${i.cs_code}" 
+											<c:forEach var="j" items="${requestScope.userSubjects}">
+												<c:if test="${j.cms_category eq 1}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+												</c:if>
+											</c:forEach>
+												/>
+												${i.cs_name}
+											</label>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div>
+							<h3>Python</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 4}">
+									<label>
+												<input type="checkbox" name="cms_code_learning" value="${i.cs_code}" 
+											<c:forEach var="j" items="${requestScope.userSubjects}">
+												<c:if test="${j.cms_category eq 1}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+												</c:if>
+											</c:forEach>
+												/>
+												${i.cs_name}
+											</label>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div>
+							<h3>ETC</h3>
+							<c:forEach var="i" items="${requestScope.es}">
+								<c:if test="${i.cs_category eq 5}">
+									<label>
+												<input type="checkbox" name="cms_code_learning" value="${i.cs_code}" 
+											<c:forEach var="j" items="${requestScope.userSubjects}">
+												<c:if test="${j.cms_category eq 1}">
+												${j.cms_code eq i.cs_code ? "checked" : ""}
+												</c:if>
+											</c:forEach>
+												/>
+												${i.cs_name}
+											</label>
+								</c:if>
+							</c:forEach>
+						</div>
 						</td>
 					</tr>
 					<tr>
@@ -166,6 +308,12 @@ s											<label>
 								<input type="radio" name="cmi_private" value="Y" ${requestScope.info.cmi_private eq 'Y' ? "checked" : ""}/>
 								비공개
 							</label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2>
+							<input type="submit" value="수정 완료"/>
+							<input type="button" onclick="javascript:location.href='${pageContext.request.contextPath}/user/home'" value="취소"/>
 						</td>
 					</tr>
 				</c:when>

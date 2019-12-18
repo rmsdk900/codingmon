@@ -75,15 +75,16 @@ public class MemberDAOImpl implements MemberDAO {
 		// 노트북용 연결
 //		conn = LaptopDBUtil.getConnection();
 		
-		String sql = "INSERT INTO codingmon_member_info VALUES(?,?,?,?,?,?,0)";
+		String sql = "INSERT INTO codingmon_member_info VALUES(?,?,?,?,?,?,?,0)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, info.getCmi_owner_num());
-			pstmt.setString(2, info.getCmi_intro());
-			pstmt.setString(3, info.getCmi_private());
-			pstmt.setString(4, info.getCmi_gender());
-			pstmt.setInt(5, info.getCmi_age());
-			pstmt.setString(6, info.getCmi_career());
+			pstmt.setString(2, info.getCmi_title());
+			pstmt.setString(3, info.getCmi_intro());
+			pstmt.setString(4, info.getCmi_private());
+			pstmt.setString(5, info.getCmi_gender());
+			pstmt.setInt(6, info.getCmi_age());
+			pstmt.setString(7, info.getCmi_career());
 			if(pstmt.executeUpdate() > 0)isSuccess=true;
 			
 		} catch (SQLException e) {
@@ -185,7 +186,7 @@ public class MemberDAOImpl implements MemberDAO {
 		// 노트북용 연결
 //		conn = LaptopDBUtil.getConnection();
 		
-		String sql = "SELECT * FROM codingmon_member WHERE cm_email=? AND cm_pw=?";
+		String sql = "SELECT * FROM codingmon_member WHERE cm_email=? AND cm_pw=? AND cm_join='Y'";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
@@ -247,6 +248,29 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
+	public int getSalt(int cm_num) {
+		int salt = 0;
+		
+		// 서버로 연결
+		conn = DBCPUtil.getConnection();
+		
+				
+		String sql = "SELECT cm_salt FROM codingmon_member WHERE cm_num=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cm_num);
+			rs = pstmt.executeQuery();
+			if(rs.next())salt = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBCPUtil.close(rs, pstmt, conn);
+		}
+				
+		return salt;
+	}
+
+	@Override
 	public MemberVO getMemberByEmail(String email) {
 		System.out.println("DB email로 member 가져오기");
 		MemberVO member = null;
@@ -257,7 +281,7 @@ public class MemberDAOImpl implements MemberDAO {
 		// 노트북용 연결
 //		conn = LaptopDBUtil.getConnection();
 		
-		String sql = "SELECT * FROM codingmon_member WHERE cm_email=?";
+		String sql = "SELECT * FROM codingmon_member WHERE cm_email=? AND cm_join='Y'";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
@@ -284,9 +308,46 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return member;
 	}
+	
+	
+	@Override
+	public MemberVO getMemberByNum(int num) {
+		MemberVO member = null;
+		// 서버로 연결
+		conn = DBCPUtil.getConnection();
+		// 테스트용 연결
+//		conn = TestDBUtil.getConnection();
+		// 노트북용 연결
+//		conn = LaptopDBUtil.getConnection();
+		
+		String sql = "SELECT * FROM codingmon_member WHERE cm_num=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				member = new MemberVO(
+						rs.getInt("cm_num"), 
+						rs.getString("cm_email"), 
+						rs.getString("cm_pw"), 
+						rs.getString("cm_name"), 
+						rs.getString("cm_phone"), 
+						rs.getString("cm_addr"), 
+						rs.getTimestamp("cm_regdate"), 
+						rs.getString("cm_join"), 
+						rs.getInt("cm_salt")
+				);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+//			TestDBUtil.close(rs, pstmt, conn);
+			DBCPUtil.close(rs, pstmt, conn);
+//			LaptopDBUtil.close(rs,pstmt,conn);
+		}
+		return member;
+	}
 
-	
-	
 	@Override
 	public MemberInfo getInfoByNum(int num) {
 		MemberInfo info = null;
@@ -302,15 +363,15 @@ public class MemberDAOImpl implements MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				info = new MemberInfo(
-						rs.getInt("cmi_owner_num"), 
-						rs.getString("cmi_intro"), 
-						rs.getString("cmi_private"), 
-						rs.getString("cmi_gender"), 
-						rs.getInt("cmi_age"), 
-						rs.getString("cmi_career"), 
-						rs.getInt("cmi_achieve")
-				);
+				info = new MemberInfo();
+				info.setCmi_owner_num(rs.getInt("cmi_owner_num"));
+				info.setCmi_title(rs.getString("cmi_title"));
+				info.setCmi_intro(rs.getString("cmi_intro"));
+				info.setCmi_private(rs.getString("cmi_private"));
+				info.setCmi_gender(rs.getString("cmi_gender"));
+				info.setCmi_age(rs.getInt("cmi_age"));
+				info.setCmi_career(rs.getString("cmi_career"));
+				info.setCmi_achieve(rs.getInt("cmi_achieve"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -333,14 +394,12 @@ public class MemberDAOImpl implements MemberDAO {
 		// 노트북용 연결
 //		conn = LaptopDBUtil.getConnection();
 		
-		String sql = "UPDATE codingmon_member SET cm_pw=?, cm_phone=?, cm_addr=? WHERE cm_num=? AND cm_email=?";
+		String sql = "UPDATE codingmon_member SET cm_phone=?, cm_addr=? WHERE cm_num=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getCm_pw());
-			pstmt.setString(2, vo.getCm_phone());
-			pstmt.setString(3, vo.getCm_addr());
-			pstmt.setInt(4, vo.getCm_num());
-			pstmt.setString(5, vo.getCm_email());
+			pstmt.setString(1, vo.getCm_phone());
+			pstmt.setString(2, vo.getCm_addr());
+			pstmt.setInt(3, vo.getCm_num());
 			
 			if(pstmt.executeUpdate() > 0)isSuccess = true;
 		} catch (SQLException e) {
@@ -364,15 +423,14 @@ public class MemberDAOImpl implements MemberDAO {
 		// 노트북용 연결
 //		conn = LaptopDBUtil.getConnection();
 		
-		String sql = "UPDATE codingmon_member_info SET cmi_intro=?, cmi_private=?, cmi_gender=?, cmi_age=?, cmi_career=? WHERE cmi_owner_num=?";
+		String sql = "UPDATE codingmon_member_info SET cmi_title=?, cmi_intro=?, cmi_private=?, cmi_career=? WHERE cmi_owner_num=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, info.getCmi_intro());
-			pstmt.setString(2, info.getCmi_private());
-			pstmt.setString(3, info.getCmi_gender());
-			pstmt.setInt(4, info.getCmi_age());
-			pstmt.setString(5, info.getCmi_career());
-			pstmt.setInt(6, info.getCmi_owner_num());
+			pstmt.setString(1, info.getCmi_title());
+			pstmt.setString(2, info.getCmi_intro());
+			pstmt.setString(3, info.getCmi_private());
+			pstmt.setString(4, info.getCmi_career());
+			pstmt.setInt(5, info.getCmi_owner_num());
 			
 			if(pstmt.executeUpdate() > 0)isSuccess = true;
 		} catch (SQLException e) {
@@ -477,6 +535,26 @@ public class MemberDAOImpl implements MemberDAO {
 //			LaptopDBUtil.close(rs,pstmt,conn);
 		}
 		
+		return false;
+	}
+	
+	@Override
+	public boolean changePass(int cm_num, String encryPw) {
+		// 서버로 연결
+		conn = DBCPUtil.getConnection();
+				
+		String sql = "UPDATE codingmon_member SET cm_pw=? WHERE cm_num=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, encryPw);
+			pstmt.setInt(2, cm_num);
+			if(pstmt.executeUpdate() > 0) return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBCPUtil.close(pstmt, conn);
+		}
+				
 		return false;
 	}
 
@@ -721,6 +799,7 @@ public class MemberDAOImpl implements MemberDAO {
 			while (rs.next()) {
 				MemberInfo info = new MemberInfo();
 				info.setCmi_owner_num(rs.getInt("cmi_owner_num"));
+				info.setCmi_title(rs.getString("cmi_title"));
 				info.setCmi_intro(rs.getString("cmi_intro"));
 				info.setCmi_private(rs.getString("cmi_private"));
 				info.setCmi_gender(rs.getString("cmi_gender"));
@@ -1008,7 +1087,7 @@ public class MemberDAOImpl implements MemberDAO {
 		// 서버로 연결
 		conn = DBCPUtil.getConnection();
 		
-		String sql = "SELECT * FROM codingmon_subject ORDER BY cs_code ASC";
+		String sql = "SELECT * FROM codingmon_subject ORDER BY cs_category ASC, cs_code ASC";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -1016,6 +1095,7 @@ public class MemberDAOImpl implements MemberDAO {
 				SubjectVO sub = new SubjectVO();
 				sub.setCs_code(rs.getInt("cs_code"));
 				sub.setCs_name(rs.getString("cs_name"));
+				sub.setCs_category(rs.getInt("cs_category"));
 				list.add(sub);
 			}
 		} catch (SQLException e) {
@@ -1026,6 +1106,33 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		return list;
 	}
+
+	@Override
+	public boolean existPw(int cm_num, String encryPw) {
+		boolean isPass = false;
+		
+		// 서버로 연결
+		conn = DBCPUtil.getConnection();
+		
+		String sql = "SELECT * FROM codingmon_member WHERE cm_num=? AND cm_pw=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cm_num);
+			pstmt.setString(2, encryPw);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())isPass = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBCPUtil.close(rs,pstmt,conn);
+		}
+		
+		return isPass;
+	}
+	
 	
 	
 	

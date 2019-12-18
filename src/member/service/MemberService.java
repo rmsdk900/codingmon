@@ -36,5 +36,14 @@ public interface MemberService {
 	boolean loginCheckAsync(HttpServletRequest request);
 	// 비밀번호 확인
 	boolean checkPwAsync(HttpServletRequest request);
+	// 직업 / 지역 / 언어 데이터 가져오기. 
+	void getFullReSource(HttpServletRequest request);
+	// 부가 정보 업데이트.
+	void updateInfo(HttpServletRequest request, HttpServletResponse response);
+	// 비밀번호 업데이트
+	void updatePw(HttpServletRequest request, HttpServletResponse response);
+	// 회원 탈퇴
+	void deleteMember(HttpServletRequest request, HttpServletResponse response);
+	
 	
 }
