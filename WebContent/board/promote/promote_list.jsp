@@ -18,10 +18,6 @@
 				<table border=1>
 					<tbody>
 						<tr>
-							<th>회원명</th>
-							<td><input type="text" name="searchName" /></td>
-						</tr>
-						<tr>
 							<th>성별</th>
 							<td><select name="searchGender">
 									<option value="" disabled selected>성별</option>
@@ -167,9 +163,9 @@
 				</tr>
 				<!-- 게시물 목록 -->
 				<c:choose>
-					<c:when test="${!empty requestScope.ml && !empty requestScope.il}">
-						<c:forEach var="ml" items="${requestScope.ml}" varStatus="status">
-						<c:set var="birth" value="${il[status.index].cmi_age}"/>
+					<c:when test="${!empty requestScope.rl}">
+						<c:forEach var="ml" items="${requestScope.rl}" varStatus="status">
+						<c:set var="birth" value="${ml.cmi_age}"/>
 						<c:set var="birthYear" value="${fn:substring(birth, 0, 4)}"/>
 						<c:set var="birthMonth" value="${fn:substring(birth, 4, 6)}"/>
 						<c:set var="birthDay" value="${fn:substring(birth, 6, 8)}"/>
@@ -187,8 +183,8 @@
 							<tr onclick="javascript:promotionDetail(${ml.cm_num})">
 								<td>${ml.cm_num}</td>
 								<td>${ml.cm_name}</td>
-								<td>${il[status.index].cmi_title}</td>
-								<td>만  ${age} 세 / ${il[status.index].cmi_gender eq 'Male' ? '남성' : '여성'}</td>
+								<td>${ml.cmi_title}</td>
+								<td>만  ${age} 세 / ${ml.cmi_gender eq 'Male' ? '남성' : '여성'}</td>
 								<td><f:formatDate value="${ml.cm_regdate}" pattern="yyyy년 MM월 dd일"/></td>
 							</tr>
 						</c:forEach>

@@ -1,14 +1,18 @@
 package board.promotion.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import board.promotion.dao.PromotionDAO;
 import board.promotion.dao.PromotionDAOImpl;
+import board.promotion.vo.ResumeVO;
 import member.dao.MemberDAO;
 import member.dao.MemberDAOImpl;
+import member.vo.AgeVO;
 import member.vo.MemberInfo;
 import member.vo.MemberVO;
 import util.PageMaker;
@@ -26,7 +30,6 @@ public class PromotionServiceImpl implements PromotionService{
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		
-		String searchName = request.getParameter("searchName");
 		String searchGender = request.getParameter("searchGender");
 		String[] ages = request.getParameterValues("searchAge");
 		String[] regions = request.getParameterValues("searchRegion");
@@ -34,20 +37,32 @@ public class PromotionServiceImpl implements PromotionService{
 		String[] workLangs = request.getParameterValues("searchWorkLang");
 		String[] learnLangs = request.getParameterValues("searchLearnLang");
 		
-		ArrayList<Integer> searchAge = new ArrayList<>();
-		ArrayList<Integer> searchRegion = new ArrayList<>();
-		ArrayList<Integer> searchJob = new ArrayList<>();
-		ArrayList<Integer> searchWorkLang = new ArrayList<>();
-		ArrayList<Integer> searchLearnLang = new ArrayList<>();
+		ArrayList<AgeVO> searchAge = null;
+		ArrayList<Integer> searchRegion = null;
+		ArrayList<Integer> searchJob = null;
+		ArrayList<Integer> searchWorkLang = null;
+		ArrayList<Integer> searchLearnLang = null;
 		
 		if(ages !=null) {
+			// 오늘 날짜
+			Date tdy = new Date();
+			SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+			int today = Integer.parseInt(fmt.format(tdy));
+			
+			searchAge = new ArrayList<>();
 			for(String a : ages) {
+				
 				int age = Integer.parseInt(a);
-				searchAge.add(age);
+				
+				AgeVO vo = new AgeVO();
+				vo.setStartAge(today-((age+9)*1000000));
+				vo.setEndAge(today-(age*1000000));
+				searchAge.add(vo);
 			}
 		}
 		
 		if(regions != null) {
+			searchRegion = new ArrayList<>(); 
 			for(String r : regions) {
 				int region = Integer.parseInt(r);
 				searchRegion.add(region);
@@ -55,6 +70,7 @@ public class PromotionServiceImpl implements PromotionService{
 		}
 		
 		if(jobs != null) {
+			searchJob = new ArrayList<>();
 			for(String j : jobs) {
 				int job = Integer.parseInt(j);
 				searchJob.add(job);
@@ -62,6 +78,7 @@ public class PromotionServiceImpl implements PromotionService{
 		}
 		
 		if(workLangs != null) {
+			searchWorkLang = new ArrayList<>();
 			for(String w : workLangs) {
 				int work = Integer.parseInt(w);
 				searchWorkLang.add(work);
@@ -69,6 +86,7 @@ public class PromotionServiceImpl implements PromotionService{
 		}
 		
 		if(learnLangs != null) {
+			searchLearnLang = new ArrayList<>();
 			for(String l : learnLangs) {
 				int learn = Integer.parseInt(l);
 				searchLearnLang.add(learn);
@@ -77,27 +95,24 @@ public class PromotionServiceImpl implements PromotionService{
 		
 		
 		
-		SearchCriteria cri = new SearchCriteria(page, 10, searchName, searchGender, searchAge, searchRegion, searchJob, searchWorkLang, searchLearnLang);
+		SearchCriteria cri = new SearchCriteria(page, 10, searchGender, searchAge, searchRegion, searchJob, searchWorkLang, searchLearnLang);
 		
 		System.out.println("searchCriteria"+cri);
 		
-		int totalCount = pdao.getSearchTotal(cri);
 		
-		// 여기부터 또 바꿔야함. 
-		System.out.println("totalCount : "+totalCount);
+		// 여기부터 조작합시다. 
+		// 검색 및 표시용 리스트
+		ArrayList<ResumeVO> ResumeList = pdao.getSearchResume(cri); 
+		
+		int totalCount = ResumeList.size();
+		
+		System.out.println(totalCount);
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
 		
-		
-		
-		ArrayList<MemberVO> memberList = mdao.getMemberList(cri);
-		ArrayList<MemberInfo> infoList = mdao.getInfoList(cri);
-		
-		
-		request.setAttribute("ml", memberList);
-		request.setAttribute("il", infoList);
+		request.setAttribute("rl", ResumeList);
 		request.setAttribute("pm", pageMaker);
 		
 	}

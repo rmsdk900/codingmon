@@ -2,20 +2,27 @@ package util;
 
 import java.util.ArrayList;
 
+import member.vo.AgeVO;
+
 public class SearchCriteria extends Criteria{
-	private String searchName;						// 회원명
 	private String searchGender;					// 성별
-	private ArrayList<Integer> searchAge;			// 나잇대
+	private ArrayList<AgeVO> searchAge;				// 나잇대
 	private ArrayList<Integer> searchRegion;		// 활동 가능 지역
 	private ArrayList<Integer> searchJob;			// 직업
 	private ArrayList<Integer> searchWorkLang;		// 업무 가능 언어
 	private ArrayList<Integer> searchLearnLang;		// 학습 중인 언어
 	
-	public SearchCriteria(int page, int perPageNum, String searchName, String searchGender, ArrayList<Integer> searchAge,
+	
+	
+	public SearchCriteria() {
+		super(1,10);
+	}
+
+
+	public SearchCriteria(int page, int perPageNum, String searchGender, ArrayList<AgeVO> searchAge,
 			ArrayList<Integer> searchRegion, ArrayList<Integer> searchJob, ArrayList<Integer> searchWorkLang,
 			ArrayList<Integer> searchLearnLang) {
 		super(page, perPageNum);
-		this.searchName = searchName;
 		this.searchGender = searchGender;
 		this.searchAge = searchAge;
 		this.searchRegion = searchRegion;
@@ -23,17 +30,6 @@ public class SearchCriteria extends Criteria{
 		this.searchWorkLang = searchWorkLang;
 		this.searchLearnLang = searchLearnLang;
 	}
-
-
-	public String getSearchName() {
-		return searchName;
-	}
-
-
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
-
 
 	public String getSearchGender() {
 		return searchGender;
@@ -45,12 +41,12 @@ public class SearchCriteria extends Criteria{
 	}
 
 
-	public ArrayList<Integer> getSearchAge() {
+	public ArrayList<AgeVO> getSearchAge() {
 		return searchAge;
 	}
 
 
-	public void setSearchAge(ArrayList<Integer> searchAge) {
+	public void setSearchAge(ArrayList<AgeVO> searchAge) {
 		this.searchAge = searchAge;
 	}
 
@@ -97,7 +93,7 @@ public class SearchCriteria extends Criteria{
 
 	@Override
 	public String toString() {
-		return super.toString()+"/ SearchCriteria [searchName=" + searchName + ", searchGender=" + searchGender + ", searchAge="
+		return super.toString()+"/ SearchCriteria [searchGender=" + searchGender + ", searchAge="
 				+ searchAge + ", searchRegion=" + searchRegion + ", searchJob=" + searchJob + ", searchWorkLang="
 				+ searchWorkLang + ", searchLearnLang=" + searchLearnLang + "]";
 	}
