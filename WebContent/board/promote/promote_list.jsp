@@ -14,7 +14,7 @@
 	<section>
 		<div>
 			<h1>인재 게시판</h1>
-			<form action="promotion/search" method="post">
+			<form action="search" method="get">
 				<table border=1>
 					<tbody>
 						<tr>
@@ -202,7 +202,30 @@
 			</table>
 		</div>
 		<!-- paging 처리 -->
-		<div class="pageWrap"></div>
+		<div class="pageWrap">
+			<c:if test="${pm.startPage > 1}">
+				<a href="?page=1">&lt;&lt;</a>
+			</c:if>
+			<c:if test="${pm.prev}">
+				<a href="?page=${pm.startPage-1}">&lt;</a>
+			</c:if>
+			<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+				<c:choose>
+					<c:when test="${pm.cri.page eq i}">
+						<a href="#">${i}</a>
+					</c:when>
+					<c:otherwise>
+						<a href="?page=${i}">${i}</a>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:if test="${pm.next}">
+				<a href="?page=${pm.endPage+1}">&gt;</a>
+			</c:if>
+			<c:if test="${pm.cri.page < pm.maxPage}">
+				<a href="?page=${pm.maxPage}">&gt;&gt;</a>
+			</c:if>
+		</div>
 	</section>
 </body>
 <script>

@@ -97,6 +97,20 @@ public class PageMaker {
 	public void setCri(Criteria cri) {
 		this.cri = cri;
 	}
+	
+	public SearchCriteria getSearch() {
+		if(this.cri instanceof SearchCriteria) {
+			return (SearchCriteria)this.cri;
+		}
+		return null;
+	}
+	//페이징 처리 관련
+	public String makingQuery(int page) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("?");
+		sb.append("page="+page);
+		return sb.toString();
+	}
 
 	@Override
 	public String toString() {

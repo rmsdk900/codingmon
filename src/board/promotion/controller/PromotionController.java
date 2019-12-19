@@ -43,6 +43,15 @@ public class PromotionController extends HttpServlet {
 		
 		if(cmd.equals("board/promotion/detail")) {
 			System.out.println("이력서 상세보기 페이지 호출");
+			ps.getDetail(request);
+			nextPage="/board/promote/promote_detail.jsp";
+		}
+		
+		if(cmd.equals("board/promotion/search")) {
+			System.out.println("이력서 다중 검색 결과 화면 호출");
+			ms.getFullReSource(request);
+			ps.search(request);
+			nextPage="/board/promote/promote_list.jsp";
 		}
 		
 		FactoryUtil.nextPage(request, response, nextPage);
