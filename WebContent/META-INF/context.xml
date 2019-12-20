@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-	<!-- <Resource 
+	<Resource 
 		name="jdbc/MysqlDB" 
 		auth="container"
 		type="javax.sql.DataSource"
@@ -10,8 +10,9 @@
 		username="myjava"
 		password="12345"
 		maxActive="100"
-		maxIdle="10" /> -->
-		<Resource 
+		maxIdle="10" />	
+</Context>
+<!-- <Resource 
 		name="jdbc/MysqlDB" 
 		auth="container"
 		type="javax.sql.DataSource"
@@ -21,9 +22,7 @@
 		username="myjava"
 		password="12345"
 		maxActive="100"
-		maxIdle="10" />
-</Context>
-
+		maxIdle="10" /> -->
 
 
 

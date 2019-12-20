@@ -364,10 +364,22 @@ public class MemberServiceImpl implements MemberService {
 		
 		boolean isChanged = dao.changePass(cm_email, cm_pw);
 		// 비밀번호 변경
-		if(isChanged) {
-			System.out.println("비밀번호 변경 성공");
-		}else {
-			System.out.println("비밀번호 변경 실패");
+		try {
+			if(isChanged) {
+				System.out.println("비밀번호 변경 성공");
+				response.sendRedirect("home");
+				
+			}else {
+				System.out.println("비밀번호 변경 실패");
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.print("<script>");
+				out.print("alert('비밀번호 수정에 실패하셨습니다!');");
+				out.print("history.go(-1);");
+				out.print("</script>");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		

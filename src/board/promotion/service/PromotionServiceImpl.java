@@ -55,8 +55,8 @@ public class PromotionServiceImpl implements PromotionService{
 				int age = Integer.parseInt(a);
 				
 				AgeVO vo = new AgeVO();
-				vo.setStartAge(today-((age+9)*1000000));
-				vo.setEndAge(today-(age*1000000));
+				vo.setStartAge(today-((age+9)*10000));
+				vo.setEndAge(today-(age*10000));
 				searchAge.add(vo);
 			}
 		}
