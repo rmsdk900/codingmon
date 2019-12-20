@@ -5,7 +5,9 @@
 <html>
 <head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 </head>
 <body>

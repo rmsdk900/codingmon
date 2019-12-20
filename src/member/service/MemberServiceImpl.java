@@ -55,7 +55,12 @@ public class MemberServiceImpl implements MemberService {
 		member.setCm_addr(addr);
 		member.setCm_salt(salt);
 		isSignUp = dao.signUpMember(member);
-		request.setAttribute("joinMember", dao.getMemberByEmail(email));
+		if(isSignUp) {
+			HttpSession session = request.getSession();
+			session.setAttribute("joinMember", dao.getMemberByEmail(email));
+			
+		}
+		
 		return isSignUp;
 	}
 	// 부가 정보 입력 처리(직업 정보랑, 지역 정보, 언어 정보까지 넣자)
@@ -85,45 +90,57 @@ public class MemberServiceImpl implements MemberService {
 		
 		// 직업 넣기 복수 응답도 고려해서 넣어야할 것 같은데...
 		String[] jobs = request.getParameterValues("cij_code");
-		for(String job : jobs) {
-			MemberJob mj = new MemberJob();
-			int code = Integer.parseInt(job);
-			mj.setCij_code(code);
-			mj.setCij_owner_num(cmi_owner_num);
-			dao.insertJob(mj);
+		if(jobs != null) {
+			for(String job : jobs) {
+				MemberJob mj = new MemberJob();
+				int code = Integer.parseInt(job);
+				mj.setCij_code(code);
+				mj.setCij_owner_num(cmi_owner_num);
+				dao.insertJob(mj);
+			}
 		}
+		
 		
 		// 지역 넣기 복수 응답 고려
 		String[] regions = request.getParameterValues("cmr_code");
-		for(String region : regions) {
-			MemberRegion mr = new MemberRegion();
-			int code = Integer.parseInt(region);
-			mr.setCmr_code(code);
-			mr.setCmr_owner_num(cmi_owner_num);
-			dao.insertRegion(mr);
+		if(regions != null) {
+			for(String region : regions) {
+				MemberRegion mr = new MemberRegion();
+				int code = Integer.parseInt(region);
+				mr.setCmr_code(code);
+				mr.setCmr_owner_num(cmi_owner_num);
+				dao.insertRegion(mr);
+			}
 		}
+		
 		
 		// 언어 정보 입력. 복수 응답 고려 - 주 언어 
 		String[] majors = request.getParameterValues("cms_code_work");
-		for(String major : majors) {
-			MemberSubject ms = new MemberSubject();
-			int code = Integer.parseInt(major);
-			ms.setCms_category(0);
-			ms.setCms_code(code);
-			ms.setCms_owner_num(cmi_owner_num);
-			dao.insertSubject(ms);
+		if(majors != null) {
+			for(String major : majors) {
+				MemberSubject ms = new MemberSubject();
+				int code = Integer.parseInt(major);
+				ms.setCms_category(0);
+				ms.setCms_code(code);
+				ms.setCms_owner_num(cmi_owner_num);
+				dao.insertSubject(ms);
+			}
 		}
+		
 		
 		// 언어 정보 입력. 복수 응답 고려 - 학습 중인 언어
 		String[] learnings = request.getParameterValues("cms_code_learning");
-		for(String learning : learnings) {
-			MemberSubject ms = new MemberSubject();
-			int code = Integer.parseInt(learning);
-			ms.setCms_category(1);
-			ms.setCms_code(code);
-			ms.setCms_owner_num(cmi_owner_num);
-			dao.insertSubject(ms);
+		if(learnings != null) {
+			for(String learning : learnings) {
+				MemberSubject ms = new MemberSubject();
+				int code = Integer.parseInt(learning);
+				ms.setCms_category(1);
+				ms.setCms_code(code);
+				ms.setCms_owner_num(cmi_owner_num);
+				dao.insertSubject(ms);
+			}
 		}
+		
 		// 부가 정보 입력 결과 처리 창. 
 		if(isInfo) {
 			response.sendRedirect("login");

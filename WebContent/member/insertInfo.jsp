@@ -47,13 +47,13 @@
 </head>
 <body>
 	<form id="insertInfoForm" action="insertInfo" method="post">
-		<input type="hidden" name="cm_num" value="${requestScope.joinMember.cm_num}"/>
+		<input type="hidden" name="cm_num" value="${sessionScope.joinMember.cm_num}"/>
 		<h1>이력서 입력</h1>
 		<table border=1>
 			<tbody>
 				<tr>
 					<th>제목</th>
-					<td><input type="text" id="cmi_title" name="cmi_title" placeholder="기본 : ${requestScope.joinMember.cm_name}의 이력서"/></td>
+					<td><input type="text" id="cmi_title" name="cmi_title" placeholder="기본 : ${sessionScope.joinMember.cm_name}의 이력서"/></td>
 				</tr>
 				<tr>
 					<th>생년월일 *</th>
@@ -257,9 +257,9 @@
 	document.getElementById("infoSubmit").addEventListener("click", function(){
 		var cmi_title = document.getElementById("cmi_title");
 		if(cmi_title.value == '' || cmi_title.value == null){
-			cmi_title.value = "'${requestScope.joinMember.cm_name}'의 이력서";
-			
+			cmi_title.value = "'${sessionScope.joinMember.cm_name}'의 이력서";
 		}
+		
 		document.getElementById("insertInfoForm").submit();
 	});
 </script>

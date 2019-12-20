@@ -281,7 +281,7 @@ public class MemberDAOImpl implements MemberDAO {
 		// 노트북용 연결
 //		conn = LaptopDBUtil.getConnection();
 		
-		String sql = "SELECT * FROM codingmon_member WHERE cm_email=? AND cm_join='Y'";
+		String sql = "SELECT * FROM codingmon_member WHERE cm_email=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
