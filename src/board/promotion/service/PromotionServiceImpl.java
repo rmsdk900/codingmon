@@ -57,6 +57,7 @@ public class PromotionServiceImpl implements PromotionService{
 				AgeVO vo = new AgeVO();
 				vo.setStartAge(today-((age+9)*10000));
 				vo.setEndAge(today-(age*10000));
+				vo.setAge(age);
 				searchAge.add(vo);
 			}
 		}
@@ -111,6 +112,8 @@ public class PromotionServiceImpl implements PromotionService{
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
+		
+		
 		
 		request.setAttribute("rl", ResumeList);
 		request.setAttribute("pm", pageMaker);

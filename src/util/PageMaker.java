@@ -1,5 +1,7 @@
 package util;
 
+import member.vo.AgeVO;
+
 public class PageMaker {
 	
 	private int totalCount;			// 전체 게시물의 개수
@@ -106,9 +108,51 @@ public class PageMaker {
 	}
 	//페이징 처리 관련
 	public String makingQuery(int page) {
+		SearchCriteria sCri = getSearch();
+		System.out.println("sCri 확인 : "+sCri);
 		StringBuilder sb = new StringBuilder();
-		sb.append("?");
-		sb.append("page="+page);
+		sb.append("?page="+page);
+		if(sCri.getSearchGender() != null && !sCri.getSearchGender().trim().equals("")) {
+			sb.append("&");
+			sb.append("searchGender="+sCri.getSearchGender());
+		}
+		
+		if(sCri.getSearchAge() != null && sCri.getSearchAge().size() > 0) {
+			for(AgeVO i : sCri.getSearchAge()) {
+				sb.append("&");
+				sb.append("searchAge="+i.getAge());
+			}
+		}
+		
+		if(sCri.getSearchRegion() != null && sCri.getSearchRegion().size() > 0) {
+			for(Integer i :sCri.getSearchRegion()) {
+				sb.append("&");
+				sb.append("searchRegion="+i);
+			}
+		}
+		if(sCri.getSearchJob() != null && sCri.getSearchJob().size() > 0) {
+			for(Integer i :sCri.getSearchJob()) {
+				sb.append("&");
+				sb.append("searchJob="+i);
+			}
+		}
+		
+		if(sCri.getSearchWorkLang() != null && sCri.getSearchWorkLang().size() > 0) {
+			for(Integer i :sCri.getSearchWorkLang()) {
+				sb.append("&");
+				sb.append("searchWorkLang="+i);
+			}
+		}
+		
+		if(sCri.getSearchLearnLang() != null && sCri.getSearchLearnLang().size() > 0) {
+			for(Integer i :sCri.getSearchLearnLang()) {
+				sb.append("&");
+				sb.append("searchLearnLang="+i);
+			}
+		}
+		
+		
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 

@@ -1,9 +1,20 @@
 package member.vo;
 
 public class AgeVO {
+	
+	private int age;
 	private int endAge;
 	private int startAge;
 	
+	
+	
+	
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
 	public int getEndAge() {
 		return endAge;
 	}
@@ -19,7 +30,7 @@ public class AgeVO {
 	
 	@Override
 	public String toString() {
-		return "AgeVO [endAge=" + endAge + ", startAge=" + startAge + "]";
+		return "AgeVO [age=" + age + ", endAge=" + endAge + ", startAge=" + startAge + "]";
 	}
 	
 	

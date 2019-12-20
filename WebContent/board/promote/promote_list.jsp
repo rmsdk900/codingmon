@@ -180,14 +180,33 @@
 						<c:if test="${birthMonth*100+birthDay > nowsMonth*100+nowsDay}">
 							<c:set var="age" value="${nowsYear-birthYear-1}"/>
 						</c:if>
-							<tr onclick="javascript:promotionDetail(${ml.cm_num})">
-								<td>${ml.cm_num}</td>
-								<td>${ml.cm_name}</td>
-								<td>${ml.cmi_title}</td>
-								<td>만  ${age} 세 / ${ml.cmi_gender eq 'Male' ? '남성' : '여성'}</td>
-								<td><f:formatDate value="${ml.cm_regdate}" pattern="yyyy년 MM월 dd일"/></td>
-							</tr>
+						<c:choose>
+							<c:when test="${ml.cmi_private eq 'N' }">
+								<tr onclick="javascript:promotionDetail(${ml.cm_num})">
+									<td>${ml.cm_num}</td>
+									<td>${ml.cm_name}</td>
+									<td>${ml.cmi_title}</td>
+									<td>만  ${age} 세 / ${ml.cmi_gender eq 'Male' ? '남성' : '여성'}</td>
+									<td><f:formatDate value="${ml.cm_regdate}" pattern="yyyy년 MM월 dd일"/></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td>${ml.cm_num}</td>
+									<td>비공개</td>
+									<td>비공개</td>
+									<td>만  ${age} 세 / ${ml.cmi_gender eq 'Male' ? '남성' : '여성'}</td>
+									<td><f:formatDate value="${ml.cm_regdate}" pattern="yyyy년 MM월 dd일"/></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+							
 						</c:forEach>
+							<tr>
+								<td colspan=5>
+									<a href="${pageContext.request.contextPath}/user/home">메인</a>
+								</td>
+							</tr>
 					</c:when>
 					<c:otherwise>
 						<tr>
@@ -200,26 +219,26 @@
 		<!-- paging 처리 -->
 		<div class="pageWrap">
 			<c:if test="${pm.startPage > 1}">
-				<a href="?page=1">&lt;&lt;</a>
+				<a href="search${pm.makingQuery(1)}">&lt;&lt;</a>
 			</c:if>
 			<c:if test="${pm.prev}">
-				<a href="?page=${pm.startPage-1}">&lt;</a>
+				<a href="search${pm.makingQuery(pm.startPage-1)}">&lt;</a>
 			</c:if>
 			<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
 				<c:choose>
 					<c:when test="${pm.cri.page eq i}">
-						<a href="#">${i}</a>
+						<a href="search${pm.makingQuery(i)}">${i}</a>
 					</c:when>
 					<c:otherwise>
-						<a href="?page=${i}">${i}</a>
+						<a href="search${pm.makingQuery(i)}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pm.next}">
-				<a href="?page=${pm.endPage+1}">&gt;</a>
+				<a href="search${pm.makingQuery(pm.endPage+1)}">&gt;</a>
 			</c:if>
 			<c:if test="${pm.cri.page < pm.maxPage}">
-				<a href="?page=${pm.maxPage}">&gt;&gt;</a>
+				<a href="search${pm.makingQuery(pm.maxPage)}">&gt;&gt;</a>
 			</c:if>
 		</div>
 	</section>

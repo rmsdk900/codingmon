@@ -51,14 +51,14 @@
 				<tr>
 					<td>휴대폰 번호</td>
 					<td>
-						<input type="text" name="cm_phone_first"/> -
-						<input type="text" name="cm_phone_middle"/> -
-						<input type="text" name="cm_phone_last"/>
+						<input type="number" class="inputPhone" name="cm_phone_first" maxlength="3"/> -
+						<input type="number" class="inputPhone" name="cm_phone_middle" maxlength="4"/> -
+						<input type="number" class="inputPhone" name="cm_phone_last" maxlength="4"/>
 					</td>
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" name="cm_addr" required/></td>
+					<td><input type="text" id="inputAddr" name="cm_addr" required/></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="submit" id="submit" value="회원가입"/></td>
@@ -114,6 +114,27 @@
 				}
 			});
 		});
+		var count = 2;
+		$(".inputPhone").keyup(function(){
+				
+			var charLimit = $(this).attr("maxlength");
+			if(this.value.length >= charLimit){
+				console.log(this.value.length);
+				console.log("next : "+$(this).next());
+				console.log(count);
+				if(count != 0){
+					$(this).next().focus();
+					count--;
+					
+				}else{
+					$("#inputAddr").focus();
+				}
+				
+				return false;
+			}
+		});
+		
+		
 	});
 	
 </script>

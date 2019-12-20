@@ -18,6 +18,6 @@
 			<a href="login">로그인</a>
 		</c:otherwise>
 	</c:choose>
-	<a href="${pageContext.request.contextPath}/board/promotion/list">인재들</a>
+	<a href="${pageContext.request.contextPath}/board/promotion/search">인재들</a>
 </body>
 </html>

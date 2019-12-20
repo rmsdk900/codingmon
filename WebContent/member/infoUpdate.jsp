@@ -15,6 +15,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -54,16 +55,16 @@
 						<th>연락처</th>
 						<td>
 							<c:if test="${!empty  phone}">
-								<input type="text" name="cm_phone_first" value="${phoneFirst}"/> -
-								<input type="text" name="cm_phone_middle" value="${phoneMiddle}"/> -
-								<input type="text" name="cm_phone_last" value="${phoneLast}"/>
+								<input type="number" class="inputPhone" name="cm_phone_first" maxlength="3"/> -
+								<input type="number" class="inputPhone" name="cm_phone_middle" maxlength="4"/> -
+								<input type="number" class="inputPhone" name="cm_phone_last" maxlength="4"/>
 							</c:if>
 						</td>
 					</tr>
 					<tr>
 						<th>주소</th>
 						<td>
-							<input type="text" name="cm_addr" value="${sessionScope.member.cm_addr}"/>
+							<input type="text" id="inputAddr" name="cm_addr" value="${sessionScope.member.cm_addr}"/>
 						</td>
 					</tr>
 					<tr>
@@ -327,4 +328,28 @@
 		</table>
 	</form>
 </body>
+<script>
+	$(function(){
+		var count = 2;
+		$(".inputPhone").keyup(function(){
+				
+			var charLimit = $(this).attr("maxlength");
+			if(this.value.length >= charLimit){
+				console.log(this.value.length);
+				console.log("next : "+$(this).next());
+				console.log(count);
+				if(count != 0){
+					$(this).next().focus();
+					count--;
+					
+				}else{
+					$("#inputAddr").focus();
+				}
+				
+				return false;
+			}
+		});
+	});
+
+</script>
 </html>

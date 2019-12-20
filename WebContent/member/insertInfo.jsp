@@ -56,7 +56,7 @@
 					<td><input type="text" id="cmi_title" name="cmi_title" placeholder="기본 : ${requestScope.joinMember.cm_name}의 이력서"/></td>
 				</tr>
 				<tr>
-					<th>생년월일</th>
+					<th>생년월일 *</th>
 					<td><input type="text" id="cmi_age" name="cmi_age" required/></td>
 				</tr>
 				<tr>
@@ -255,9 +255,10 @@
 </body>
 <script>
 	document.getElementById("infoSubmit").addEventListener("click", function(){
-		var cmi_title = document.getElementById("cmi_title").value;
-		if(cmi_title == "" || cmi_title == null){
-			cmi_title = "${requestScope.joinMember.cm_name}의 이력서";
+		var cmi_title = document.getElementById("cmi_title");
+		if(cmi_title.value == '' || cmi_title.value == null){
+			cmi_title.value = "'${requestScope.joinMember.cm_name}'의 이력서";
+			
 		}
 		document.getElementById("insertInfoForm").submit();
 	});
