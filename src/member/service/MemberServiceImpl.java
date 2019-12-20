@@ -143,7 +143,10 @@ public class MemberServiceImpl implements MemberService {
 		
 		// 부가 정보 입력 결과 처리 창. 
 		if(isInfo) {
+			HttpSession session = request.getSession();
+			session.removeAttribute("joinMember");
 			response.sendRedirect("login");
+			
 		}else {
 			// 부가정보 입력 페이지로 다시 넘어가기
 			response.setContentType("text/html;charset=utf-8");
