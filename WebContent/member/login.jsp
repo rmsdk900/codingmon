@@ -8,7 +8,7 @@
 
 <meta charset="UTF-8">
 
-<title>Insert title here</title>
+<title>코딩몬</title>
 </head>
 <body>
 	<section>

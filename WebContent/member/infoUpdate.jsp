@@ -16,7 +16,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<title>Insert title here</title>
+<title>코딩몬</title>
 </head>
 <body>
 	<form action="updateInfoSubmit" method="POST">
