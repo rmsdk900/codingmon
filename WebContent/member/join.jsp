@@ -10,7 +10,7 @@
 </head>
 <body>
 	<section>
-		<form action="join" method="post">
+		<form action="join" id="joinForm" method="post">
 			<table>
 				<tr>
 					<th colspan="2">회원가입</th>
@@ -18,7 +18,7 @@
 				<tr>
 					<td>이메일</td>
 					<td>
-						<input type="email" id="cm_email" name="cm_email" placeholder="email형식" required/>
+						<input type="email" id="cm_email" name="cm_email" placeholder="email형식" />
 						<input type="button" id="checkId" value="아이디 중복 체크"/>
 					</td>
 				</tr>
@@ -42,16 +42,17 @@
 					<td>
 						<div id="alert-danger">비밀번호가 일치하지 않습니다.</div>
 						<div id="alert-success">비밀번호가 일치합니다.</div>
+						<div id="alert-six">비밀번호는  영문, 숫자 혼합 6자리 이상이어야 합니다.</div>
 					</td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="cm_name" required/></td>
+					<td><input type="text" id="cm_name" name="cm_name" required/></td>
 				</tr>
 				<tr>
 					<td>휴대폰 번호</td>
 					<td>
-						<input type="number" class="inputPhone" name="cm_phone_first" maxlength="3"/> -
+						<input type="number" id="cm_phone_first" class="inputPhone" name="cm_phone_first" maxlength="3"/> -
 						<input type="number" class="inputPhone" name="cm_phone_middle" maxlength="4"/> -
 						<input type="number" class="inputPhone" name="cm_phone_last" maxlength="4"/>
 					</td>
@@ -61,7 +62,7 @@
 					<td><input type="text" id="inputAddr" name="cm_addr" required/></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" id="submit" value="회원가입"/></td>
+					<td colspan="2"><input type="button" id="btnSubmit" value="회원가입" onclick="javascript:GoToSignUP()"/></td>
 				</tr>
 			</table>
 		</form>
@@ -71,9 +72,10 @@
 	$(function(){
 		$("#alert-success").hide();
 		$("#alert-danger").hide();
+		$("#alert-six").hide();
 		$("#id-use").hide();
 		$("#id-duplicated").hide();
-		$("#submit").attr("disabled", true);
+		$("#btnSubmit").attr("disabled", true);
 		
 		$("input").keyup(function(){
 			var cm_pw = $("#cm_pw").val();
@@ -82,38 +84,63 @@
 				if(cm_pw == re_pw){
 					$("#alert-success").show();
 					$("#alert-danger").hide();
-					$("#submit").removeAttr("disabled");
+					$("#alert-six").hide();
+					$("#btnSubmit").removeAttr("disabled");
 				}else {
 					$("#alert-success").hide();
 					$("#alert-danger").show();
-					$("#submit").attr("disabled", true);
+					$("#alert-six").hide();
+					$("#btnSubmit").attr("disabled", true);
 				}
 				
 			}
 		});
 		document.getElementById("checkId").addEventListener("click", function(){
-			$.ajax({
-				type: "POST",
-				url: "${pageContext.request.contextPath}/checkId.async",
-				data: {
-					cm_email: $("#cm_email").val()
-				},
-				dataType: "json",
-				success: function(data){
-					if(data){
-						$("#id-use").hide();
-						$("#id-duplicated").show();
-					}else{
-						$("#id-use").show();
-						$("#id-duplicated").hide();
-						$("#submit").removeAttr("disabled");
-					}
-				},
-				error: function(request,status,error){
-					console.log("AJAX 실패");
+			var inputEmail = document.getElementById("cm_email");
+			if(!inputEmail.value){
+				alert("이메일을 입력하세요!");
+				inputEmail.focus();
+				return;
+			}else{
+				if(!checkEmail(inputEmail.value)){
+					alert("이메일 형식이 잘못되었습니다.");
+					inputEmail.focus();
+					return;
+				}else{
+					$.ajax({
+						type: "POST",
+						url: "${pageContext.request.contextPath}/checkId.async",
+						data: {
+							cm_email: $("#cm_email").val()
+						},
+						dataType: "json",
+						success: function(data){
+							if(data){
+								$("#id-use").hide();
+								$("#id-duplicated").show();
+							}else{
+								$("#id-use").show();
+								$("#id-duplicated").hide();
+								$("#checkId").attr("disabled", true);
+							}
+						},
+						error: function(request,status,error){
+							console.log("AJAX 실패");
+						}
+					});
 				}
-			});
+			}
+			
 		});
+		function checkEmail(str){
+			var reg_email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+			if (!reg_email.test(str)){
+				return false;
+			}else {
+				return true;
+			}
+		}
+		
 		var count = 2;
 		$(".inputPhone").keyup(function(){
 				
@@ -134,9 +161,43 @@
 			}
 		});
 		
-		
 	});
-	
+	function GoToSignUP(){
+		var inputPw = document.getElementById("cm_pw");
+		if(!checkPw(inputPw.value)){
+			$("#alert-success").hide();
+			$("#alert-six").show();
+			inputPw.focus();
+			return;
+		}else{
+			$("#alert-six").hide();
+			if(document.getElementById("cm_name").value==""){
+				alert("이름을 입력해주세요!");
+				document.getElementById("cm_name").focus();
+				return;
+			}else if(document.getElementById("cm_phone_first").value==null 
+					|| document.getElementById("cm_phone_first").value==""){
+				alert("휴대폰 번호를 입력해주세요!");
+				document.getElementById("cm_phone_first").focus();
+				return;
+			}else if($("#inputAddr").value==null || $("#inputAddr").value=="" ){
+				alert("주소를 입력해주세요!");
+				$("#inputAddr").focus();
+				return;
+			}else{
+				$("#joinForm").submit();
+			}
+		}
+		
+	}
+	function checkPw(str){
+		var reg_pw = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+		if (!reg_pw.test(str)){
+			return false;
+		}else {
+			return true;
+		}
+	}
 </script>
 </html>
 <!-- 회원가입 -->
