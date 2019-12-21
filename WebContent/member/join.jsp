@@ -59,7 +59,7 @@
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" id="inputAddr" name="cm_addr" required/></td>
+					<td><input type="text" id="inputAddr" name="cm_addr" /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="button" id="btnSubmit" value="회원가입" onclick="javascript:GoToSignUP()"/></td>
@@ -180,7 +180,7 @@
 				alert("휴대폰 번호를 입력해주세요!");
 				document.getElementById("cm_phone_first").focus();
 				return;
-			}else if($("#inputAddr").value==null || $("#inputAddr").value=="" ){
+			}else if(document.getElementById("inputAddr").value==null || document.getElementById("inputAddr").value=="" ){
 				alert("주소를 입력해주세요!");
 				$("#inputAddr").focus();
 				return;
