@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>코딩몬 - 비밀번호 변경</title>
 </head>
 <body>
 	<section>

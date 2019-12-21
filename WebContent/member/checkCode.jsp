@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>코딩몬 - 비밀번호 코드 입력</title>
 </head>
 <body>
 	<form action="checkPwCode" method="post">
