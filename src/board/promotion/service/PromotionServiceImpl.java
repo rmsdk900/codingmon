@@ -105,15 +105,13 @@ public class PromotionServiceImpl implements PromotionService{
 		// 검색 및 표시용 리스트
 		ArrayList<ResumeVO> ResumeList = pdao.getSearchResume(cri); 
 		
-		int totalCount = ResumeList.size();
+		int totalCount = pdao.getSearchTotal(cri);
 		
 		System.out.println(totalCount);
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
-		
-		
 		
 		request.setAttribute("rl", ResumeList);
 		request.setAttribute("pm", pageMaker);
