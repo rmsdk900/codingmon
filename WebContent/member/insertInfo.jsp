@@ -28,6 +28,7 @@
           monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
           dateFormat: "yymmdd",             // 날짜의 형식
           changeYear: true,
+          yearRange: "-100:+0",
           changeMonth: true                 // 월을 이동하기 위한 선택상자 표시여부
       });
 
