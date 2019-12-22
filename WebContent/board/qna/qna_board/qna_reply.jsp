@@ -12,11 +12,6 @@
 			type="hidden" name="cbq_writer_name"
 			value="${boardVO.cbq_writer_name}" /> <input type="hidden"
 			name="cbq_writer_num" value="${boardVO.cbq_writer_num}" />
-
-		<div class="field" style="width: 70%; margin: auto">
-			<label class="label">원본글 번호${boardVO.cbq_re_ref}/ 원본글 레벨
-				${boardVO.cbq_re_lev} / 원본글 정렬번호${boardVO.cbq_re_seq}/</label>
-		</div>
 		<br>
 
 		<div class="field" style="width: 70%; margin: auto">

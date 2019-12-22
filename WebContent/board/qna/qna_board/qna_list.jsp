@@ -24,22 +24,31 @@
 
 
 						<c:forEach var="board" items="${qna_List}">
-							<tr>
-								<td align=center width=90 style="word-break: break-all">${board.cbq_num}</td>
-								<td align=center><c:if test="${board.cbq_re_lev != 0}">
-										<c:forEach var="i" begin="1" end="${board.cbq_re_lev}">
-									&nbsp;&nbsp;&nbsp;
-								</c:forEach>
-								└▶
-							</c:if> <a href="boardDetail.bo?cbq_num=${board.cbq_num}">${board.cbq_title}</a>
-								</td>
-								<td align=center width=90 style="word-break: break-all">${board.cbq_writer_name}</td>
-								<td align=center width=200 style="word-break: break-all">${board.cbq_regdate}</td>
-								<td align=center width=90 style="word-break: break-all">${board.cbq_readcount}</td>
-							</tr>
+							<c:choose>
+								<c:when test="${board.cbq_delete eq 'N'}">
+									<tr>
+										<td align=center width=90 style="word-break: break-all">${board.cbq_num}</td>
+										<td align=center><c:if test="${board.cbq_re_lev != 0}">
+												<c:forEach var="i" begin="1" end="${board.cbq_re_lev}">
+											&nbsp;&nbsp;&nbsp;
+										</c:forEach>
+										└▶
+									</c:if> <a href="boardDetail.bo?cbq_num=${board.cbq_num}">${board.cbq_title}</a>
+										</td>
+										<td align=center width=90 style="word-break: break-all">${board.cbq_writer_name}</td>
+										<td align=center width=200 style="word-break: break-all">${board.cbq_regdate}</td>
+										<td align=center width=90 style="word-break: break-all">${board.cbq_readcount}</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td align=center width=90 style="word-break: break-all">${board.cbq_num}</td>
+										<td colspan=4 align=center>삭제된 게시물입니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 					</c:when>
-
 					<c:otherwise>
 						<tr>
 							<td colspan=5>등록된 게시물이 없습니다.</td>

@@ -73,9 +73,9 @@ public class QNA_BoardDAOImpl implements QNA_BoardDAO{
 			conn = DBCPUtil.getConnection();
 			
 			String sql = "SELECT * FROM codingmon_board_qna "
-					+ "ORDER BY cbq_re_ref DESC ,"
-					+ "cbq_re_seq ASC "
-					+ "limit ? , ? ";
+					+ " ORDER BY cbq_re_ref DESC, "
+					+ " cbq_re_seq ASC "
+					+ " limit ? , ? ";
 		
 			try {
 				pstmt = conn.prepareStatement(sql);
@@ -149,7 +149,7 @@ public class QNA_BoardDAOImpl implements QNA_BoardDAO{
 		System.out.println("dao 출력");
 		QNA_BoardVO qna_board = null;
 		conn = DBCPUtil.getConnection();
-		String sql = "SELECT * FROM codingmon_board_qna WHERE cbq_num = ?";
+		String sql = "SELECT * FROM codingmon_board_qna WHERE cbq_num = ? AND cbq_delete = 'N'";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cbq_num);
@@ -253,13 +253,12 @@ public class QNA_BoardDAOImpl implements QNA_BoardDAO{
 			conn = DBCPUtil.getConnection();
 			
 			try {
-				String sql = "DELETE FROM codingmon_board_qna "
-						+ "WHERE cbq_num = ? ";
-						//+ "AND cnq_writer_num = ? ";
+				String sql = "UPDATE codingmon_board_qna SET cbq_delete='Y' WHERE cbq_num=?";
+						
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, cbq_num);
-				//pstmt.setInt(2, cbq_writer_num);
+				
 				
 				if(pstmt.executeUpdate()>0) {
 					isDeleted = true;
@@ -325,7 +324,7 @@ public class QNA_BoardDAOImpl implements QNA_BoardDAO{
 
 	@Override
 	public int getCommentListCount(int ccq_board_num) {
-		String sql = "SELECT count(*) FROM codingmon_comment_qna WHERE ccq_board_num=?";
+		String sql = "SELECT count(*) FROM codingmon_comment_qna WHERE ccq_board_num=? AND ccq_delete='N'";
 		int listCount = 0;
 		conn = DBCPUtil.getConnection();
 		try {
@@ -409,9 +408,7 @@ public class QNA_BoardDAOImpl implements QNA_BoardDAO{
 		 * String sql = "UPDATE codingmon_comment_qna SET " + " ccq_delete = 'Y' " +
 		 * " WHERE ccq_num = ? " + " AND ccq_writer_num = ?";
 		 */
-		String sql = "DELETE from codingmon_comment_qna  "
-				  + " WHERE ccq_num = ? "
-				  + " AND ccq_writer_num = ?";
+		String sql = "UPDATE codingmon_comment_qna SET ccq_delete='Y' WHERE ccq_num=? AND ccq_writer_num=?";
 		conn = DBCPUtil.getConnection();
 		try {
 			pstmt = conn.prepareStatement(sql);

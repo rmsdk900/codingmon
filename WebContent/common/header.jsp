@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,11 +34,13 @@
 <meta name="author" content="">
 <link rel="stylesheet"
 	href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../BulmaJS-0.10.0/dist/dropdown.js"></script>
-<link rel="icon" href="../images/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/images/cover.png">
 <title>코딩몬</title>
 </head>
 <body>
+
 	<nav class="navbar is-dark is-fluid " role="navigation"
 		aria-label="main navigation">
 
@@ -49,7 +52,7 @@
 			</a> <a role="button" class="navbar-burger" aria-label="menu"
 				aria-expanded="false"> <span aria-hidden="true"></span> <span
 				aria-hidden="true"></span> <span aria-hidden="true"></span>
-			</a> <a class="navbar-item"
+			</a> <a class="navbar-item is-outlined"
 				href="${pageContext.request.contextPath}/board/promotion/search">일
 				구합니다</a> <a class="navbar-item"
 				href="${pageContext.request.contextPath}/board/rec/search">일
@@ -62,8 +65,8 @@
 		<div class="navbar-end is-fluid ">
 			<!--로그인 회원가입  -->
 
-			<div class="navbar-item">
-				<div class="buttons">
+			<div class="navbar-brand">
+				<div class="navbar-item">
 					<c:choose>
 						<c:when test="${!empty sessionScope.member}">
 							<a class="navbar-item has-text-light"
@@ -83,3 +86,4 @@
 			</div>
 		</div>
 	</nav>
+	

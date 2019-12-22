@@ -41,7 +41,7 @@
 									<!-- 첨부파일 -->
 									<div class="field">
 										<label class="label">첨부파일 </label>
-										<div class="file has-name ">
+										<div class="file has-name "  id="file-js">
 											<label class="file-label"> <input class="file-input"
 												type="file" name="cbq_file"> <span class="file-cta ">
 													<span class="file-icon "> <i class="fas fa-upload"></i>
@@ -68,6 +68,15 @@
 	</form>
 </section>
 </body>
+<script>
+	const fileInput = document.querySelector("#file-js input[type=file]");
+	fileInput.onchange = function(){
+		if(fileInput.files.length > 0){
+			const fileName = document.querySelector('#file-js .file-name');
+			fileName.textContent = fileInput.files[0].name;
+		}
+	}
+</script>
 </html>
 
 

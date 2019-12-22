@@ -1,76 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	pageEncoding="UTF-8"%>
+<%@ include file="../common/header.jsp"%>
+<section class="hero is-fullheight is-primary">
+	<form action="login" id="loginForm" method="post">
+		<div class="hero-body">
+			<div class="container has-text-centered">
+				<div class="columns is-8 is-variable ">
+					<div class="column is-two-thirds has-text-left">
+						<h1 class="title is-1">로그인</h1>
+					</div>
+					<div class="column is-one-third has-text-left ">
+						<!--  -->
+						<article class="message" id="login-danger">
+							<label class="has-text-danger">비밀번호가 일치하지 않습니다.</label>
+						</article>
+						<div class="field">
+							<label class="label">Email</label>
 
-<meta charset="UTF-8">
+							<div class="control">
+								<input class="input is-medium" type="email" id="cm_email"
+									name="cm_email" placeholder="email" />
+							</div>
+						</div>
+						<!-- 비밀번호 -->
+						<div class="field">
+							<label class="label">비밀번호</label>
 
-<title>코딩몬</title>
-</head>
-<body>
-	<section>
-		<form action="login" id="loginForm" method="post">
-			<table>
-				<tr>
-					<th colspan="2">로그인</th>
-				</tr>
-				<tr>
-					<td id="login-danger" colspan="2">아이디와 비밀번호를 확인해주세요!</td>
-				</tr>
-				<tr>
-					<td>이메일</td>
-					<td><input type="email" id="cm_email" name="cm_email" required/></td>
-				</tr>
-				<tr>
-					<td>비밀번호</td>
-					<td><input type="password" id="cm_pw" name="cm_pw" required/></td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<label>
-							<input type="checkbox" name="cm_auto"/>
-							로그인 정보 저장
-						</label>
-					</td>
-				</tr>
-				
-				<tr>
-					<td colspan="2">
-						<input type="button" id="loginAsync" value="로그인"/>
-						<input type="button" onclick="location.href='findPw';" value="비밀번호 찾기"/>
-					</td>
-				</tr>
-			</table>
-		</form>
-	</section>
+							<div class="control">
+								<input class="input is-medium " type="password" id="cm_pw"
+									name="cm_pw" placeholder="비밀번호 " required />
+							</div>
+						</div>
+						<div class="field">
+							<div class="control">
+								<label class="checkbox"> <input type="checkbox"
+									name="cm_auto" /> 로그인 정보 저장
+								</label>
+							</div>
+						</div>
+						<div>
+							<input
+								class="button is-primary is-fullwidth has-text-weight-medium is-medium is-inverted is-outlined"
+								type="button" id="loginAsync" value="로그인" /> <input
+								class="button is-primary is-fullwidth has-text-weight-medium is-medium is-inverted is-outlined"
+								type="button" onclick="location.href='findPw';" value="비밀번호 찾기" />
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+	</form>
+</section>
 </body>
 <script>
-	$(function(){
+	$(function() {
 		$("#login-danger").hide();
-		$("#loginAsync").click(function(){
+		$("#loginAsync").click(function() {
 			var cm_email = $("#cm_email").val();
 			var cm_pw = $("#cm_pw").val();
 			$.ajax({
-				type: "POST",
-				url: "${pageContext.request.contextPath}/login.async",
-				data: {
-					cm_email: cm_email,
-					cm_pw: cm_pw
+				type : "POST",
+				url : "${pageContext.request.contextPath}/login.async",
+				data : {
+					cm_email : cm_email,
+					cm_pw : cm_pw
 				},
-				dataType: "json",
-				success: function(data){
+				dataType : "json",
+				success : function(data) {
 					console.log(data);
-					if(data){
+					if (data) {
 						$("#loginForm").submit();
-					}else{
+					} else {
 						$("#login-danger").show();
 					}
 				}
 			});
-			
+
 		});
 	})
 </script>
