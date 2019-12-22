@@ -16,7 +16,13 @@
 
 					</div>
 					<div class="column is-one-third has-text-left ">
-						<!--  -->
+						<!-- 변경 구간 오른쪽 상단 글 및 hr 추가  -->
+		                     <div class="column  has-text-left">
+		                        <h2 class="subtitle is-1 ">비밀번호 입력</h2>
+		                     </div>
+		                     <hr>
+		                  <!--////////////////  -->
+
 						<div class="field">
 							<label class="label">새 비밀번호</label> <input
 								class="input is-medium" type="password" name="cm_pw"

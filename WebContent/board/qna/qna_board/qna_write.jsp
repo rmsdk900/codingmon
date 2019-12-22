@@ -2,19 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../../../common/header.jsp" %>
 
-<section>
+<section class="hero is-primary is-fullheight-with-navbar">
 
-	<form action="boardWriteSubmit.bo" method="POST" enctype="multipart/form-data">
+	<form action="${pageContext.request.contextPath}/boardWriteSubmit.bo" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="cbq_writer_name" value="${sessionScope.member.cm_name}"/>
 		<input type="hidden" name="cbq_writer_num" value="${sessionScope.member.cm_num}"/>
-		<div >
-				<!-- class="hero-body" -->
-				<div class="hero-body has-text-centered"  style="margin:auto;">
-					<!--  -->
-					<div class="columns is-8 is-variable ">
-						<!--  -->
+		<div class="hero-body ">
+         <!-- class="hero-body" -->
+         <div class="container  has-text-centered">
+            <!-- 아래가 공간 분할 -->
+            <div class="columns is-8 is-variable ">
+               <!--왼쪽공간  -->
+               <div class="column is-two-thirds has-text-left">
+                  <h1 class="title is-1">묻고 답하기</h1>
 
-						<div class="column is-one-third has-text-left">
+               </div>
+               <!--오른쪽 공간  -->
+
+               <!-- 오른쪽 상단 글 -->
+               <div class="column is-one-third has-text-left ">
+                  <div class="column  has-text-left">
+                     <h2 class="subtitle is-1 ">질문 작성</h2>
+                  </div>
+                  <hr>
 
 							<!-- 이름 -->
 							<div class="field">
@@ -22,7 +32,7 @@
 								<div class="control">
 
 									<input class="input is-medium" type="text" name="cbq_title"
-										required />
+										  required />
 
 								</div>
 
@@ -30,18 +40,19 @@
 								<div class="field">
 									<label class="label">내용</label>
 									<div class="control">
-										<textarea class="textarea" name="cbq_content" cols=50 rows=10></textarea>
+										<textarea class="textarea" name="cbq_content" cols=50 rows=10
+										></textarea>
 									</div>
 
 									<!-- 첨부파일 -->
 									<div class="field">
 										<label class="label">첨부파일 </label>
-										<div class="file has-name" id="file-js">
+										<div class="file has-name "  id="file-js">
 											<label class="file-label"> <input class="file-input"
 												type="file" name="cbq_file"> <span class="file-cta ">
 													<span class="file-icon "> <i class="fas fa-upload"></i>
 												</span> <span class="file-label"> Choose a file </span>
-											</span> <span class="file-name"> 선택된 파일</span>
+											</span> <span class="file-name  "> 선택된 파일</span>
 											</label>
 										</div>
 									</div>

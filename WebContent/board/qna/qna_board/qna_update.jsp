@@ -1,24 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<link href="css/comment.css" rel="stylesheet" type="text/css"/>
-<%@ include file="../../../common/header.jsp" %>
+   pageEncoding="UTF-8"%>
+<link href="css/comment.css" rel="stylesheet" type="text/css" />
+<%@ include file="../../../common/header.jsp"%>
 
-<section>
+<section class="hero is-primary is-fullheight-with-navbar">
+   <!-- hero속성추가 -->
 
-	<form action="boardUpdateSubmit.bo" method="POST" enctype="multipart/form-data">
-		<input type="hidden" name="cbq_writer_name" value="${board.cbq_writer_name}"/>
-		<input type="hidden" name="cbq_writer_num" value="${board.cbq_writer_num}"/>
-		<input type="hidden" name="cbq_num" value="${board.cbq_num}"/>
-		
-		
-		<div >
-				<!-- class="hero-body" -->
-				<div class="container" style="width:80%; margin:auto">
-					<!--  -->
-					<div class="columns is-8 is-variable ">
-						<!--  -->
+   <form action="${pageContext.request.contextPath}/boardUpdateSubmit.bo" method="POST"
+      enctype="multipart/form-data">
+      <input type="hidden" name="cbq_writer_name"
+         value="${board.cbq_writer_name}" /> <input type="hidden"
+         name="cbq_writer_num" value="${board.cbq_writer_num}" /> <input
+         type="hidden" name="cbq_num" value="${board.cbq_num}" />
 
-						<div class="column is-one-third has-text-left">
+
+      <!-- <div class="hero-body ">
+            class="hero-body"
+            <div class="container" style="width:80%; margin:auto">
+               
+               <div class="columns is-8 is-variable ">
+                  
+
+                  <div class="column is-one-third has-text-left">
+    -->
+      <div class="hero-body ">
+         <!-- class="hero-body" -->
+         <div class="container  has-text-centered">
+            <!-- 아래가 공간 분할 -->
+            <div class="columns is-8 is-variable ">
+               <!--왼쪽공간  -->
+               <div class="column is-two-thirds has-text-left">
+                  <h1 class="title is-1">묻고 답하기</h1>
+
+               </div>
+               <!--오른쪽 공간  -->
+
+               <!-- 오른쪽 상단 글 -->
+               <div class="column is-one-third has-text-left ">
+                  <div class="column  has-text-left">
+                     <h2 class="subtitle is-1 ">글 수정</h2>
+                  </div>
+                  <hr>
 
 							<!-- 이름 -->
 							<div class="field">
