@@ -1,40 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<title>코딩몬</title>
-</head>
-<body>
-	<section>
-		<h1>회원 탈퇴</h1>
-		<form id="delMemForm" action="deleteMemberSubmit" method="post">
-			<input type="hidden" name="cm_num" value="${param.cm_num}"/>
-			<table>
-				<tbody>
-					<tr>
-						<td>비밀번호 : </td>
-						<td>
-							<input type="password" id="cm_pw" name="cm_pw"/>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><div id="wrongPw">비밀번호를 다시 확인해주세요!</div></td>
-					</tr>
-					<tr>
-						<td colspan=2>
-							<input id="btnSubmit" type="button" value="제출"/>
-							<input type="button" onclick="history.go(-1);" value="취소"/>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
-	</section>
-</body>
+	pageEncoding="UTF-8"%>
+<!--    헤더 영역 -->
+<%@ include file="../common/header.jsp"%>
+<section class="hero is-primary is-fullheight-with-navbar">
+	<form id="delMemForm" action="deleteMemberSubmit" method="post">
+		<input type="hidden" name="cm_num" value="${param.cm_num}" />
+		<div class="hero-body ">
+			<!-- class="hero-body" -->
+			<div class="container  has-text-centered">
+				<!--  -->
+				<div class="columns is-8 is-variable ">
+					<div class="column is-two-thirds has-text-left">
+						<h1 class="title is-1">회원 탈퇴</h1>
+
+					</div>
+					<div class="column is-one-third has-text-left ">
+						<!--  -->
+						<div class="field">
+							<div class="column  has-text-left">
+								<h2 class="subtitle is-1 ">비밀번호 확인</h2>
+								<hr>
+
+
+								<input style="border-bottom: 1px solid white;"
+									class="input is-medium" type="password" id="cm_pw" name="cm_pw"
+									required /> <br>
+
+								<article class="message">
+
+									<div id="wrongPw">
+										<label class="has-text-danger">올바른 비밀번호를 입력해주세요.</label>
+									</div>
+
+								</article>
+								<div class="control">
+									<br> <input
+										class="button is-primary is-inverted is-outlined"
+										id="btnSubmit" type="button" value="제출" /> <input
+										class="button is-primary is-inverted is-outlined"
+										type="button" onclick="history.go(-1);" value="취소" />
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</section>
 <script>
 	$(function(){
 		$("#wrongPw").hide();
@@ -58,4 +72,5 @@
 		});
 	});
 </script>
-</html>
+<%@ include file="../common/footer.jsp"%>
+

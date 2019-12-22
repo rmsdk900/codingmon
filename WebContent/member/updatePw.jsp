@@ -1,52 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<meta charset="UTF-8">
-<title>코딩몬</title>
-</head>
-<body>
-	<section>
-		<h1>
-			비밀번호 변경
-		</h1>
-		<form id="updatePwForm" action="updatePwSubmit" method="post">
-			<input type="hidden" name="cm_num" value="${param.cm_num}"/>
-			<table>
-				<tr>
-					<td>현재 비밀번호</td>
-					<td><input type="password" id="current_pw" required/></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<div id="wrong-current">현재 비밀번호가 일치하지 않습니다. </div>
-					</td>
-				</tr>
-				<tr>
-					<td>새 비밀번호</td>
-					<td><input type="password" id="cm_pw" name="cm_pw" required/></td>
-				</tr>
-				<tr>
-					<td>새 비밀번호 확인</td>
-					<td><input type="password" id="re_pw" required/></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<div id="alert-danger">비밀번호가 일치하지 않습니다.</div>
-						<div id="alert-success">비밀번호가 일치합니다.</div>
-						<div id="alert-null">비밀번호를 입력해주세요!</div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="button" id="update" value="변경요청"/></td>
-				</tr>
-			</table>
-		</form>
-	</section>
+	pageEncoding="UTF-8"%>
+
+<!--    헤더 영역 -->
+<%@ include file="../common/header.jsp"%>
+
+<section class="hero is-fullheight is-primary">
+	<form id="updatePwForm" action="updatePwSubmit" method="post">
+		<input type="hidden" name="cm_num" value="${param.cm_num}" />
+		<div class="hero-body ">
+			<!-- class="hero-body" -->
+			<div class="container  has-text-centered">
+				<!--  -->
+				<div class="columns is-8 is-variable ">
+					<div class="column is-two-thirds has-text-left">
+						<h1 class="title is-1">비밀번호 변경</h1>
+
+					</div>
+					<div class="column is-one-third has-text-left ">
+
+						<div class="field">
+							<label class="label">현재 비밀번호</label>
+
+							<div class="control">
+								<input class="input is-medium" type="password" id="current_pw"
+									required />
+							</div>
+							<article class="message">
+								<div id="wrong-current">
+									<label class="has-text-danger">현재 비밀번호가 일치하지 않습니다.</label>
+								</div>
+							</article>
+							<!-- 비밀번호확인 -->
+							<label class="label">새 비밀번호</label>
+							<div class="control">
+
+								<input class="input is-medium" type="password" id="cm_pw"
+									name="cm_pw" required />
+
+							</div>
+							<label class="label">새비밀번호 확인</label>
+							<div class="control">
+
+								<input class="input is-medium" type="password" id="re_pw"
+									required />
+							</div>
+
+
+							<article class="message">
+								<div>
+									<div id="alert-danger">
+										<label class="has-text-danger">비밀번호가 일치하지 않습니다.</label>
+									</div>
+									<div id="alert-success">
+										<label class="has-text-primary">비밀번호가 일치합니다.</label>
+									</div>
+									<div id="alert-null">
+										<label class="has-text-danger">비밀번호를 입력해주세요!</label>
+									</div>
+								</div>
+							</article>
+
+						</div>
+						<div class="control">
+							<input
+								class="button is-primary is-fullwidth has-text-weight-medium is-medium is-inverted is-outlined"
+								type="button" id="update" value="변경요청" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</section>
 </body>
 <script>
 	$(function(){

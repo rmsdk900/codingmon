@@ -111,7 +111,7 @@
 						
 						<tr>
 							<td colspan=2>
-								<c:if test="${sessionScope.member.cm_num eq requestScope.prospects.cm_num}">
+								<c:if test="${sessionScope.member.cm_num eq requestScope.prospects.cm_num || sessionScope.member.cm_num eq 1}">
 									<a href="${pageContext.request.contextPath}/user/updateInfo?cm_num=${requestScope.prospects.cm_num}">이력서 수정</a> |
 								</c:if>
 								<a href="list">목록</a>

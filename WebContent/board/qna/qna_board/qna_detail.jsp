@@ -35,10 +35,15 @@
 		</c:if>
 		<tr >
 			<td colspan=2 >
-						<a class="button is-light is-left" href="boardReplyForm.bo?cbq_num=${boardVO.cbq_num}">답글</a>
-						<a  class="button is-light" href="boardUpdateForm.bo?cbq_num=${boardVO.cbq_num}">수정</a>
-						<a class="button is-light" href="javascript:deleteBoard();">삭제</a>
-						<a class="button is-light" href="boardList.bo">목록</a>
+			<c:if test="${!empty sessionScope.member}">
+				<a class="button is-light is-left" href="${pageContext.request.contextPath}/boardReplyForm.bo?cbq_num=${boardVO.cbq_num}">답글</a>
+				<c:if test="${sessionScope.member.cm_num eq boardVO.cbq_writer_num || sessionScope.member.cm_num eq 1}">
+					<a  class="button is-light" href="${pageContext.request.contextPath}/boardUpdateForm.bo?cbq_num=${boardVO.cbq_num}">수정</a>
+					<a class="button is-light" href="javascript:deleteBoard();">삭제</a>
+				</c:if>
+			</c:if>
+						
+						<a class="button is-light" href="${pageContext.request.contextPath}/boardList.bo">목록</a>
 			</td>
 		</tr>
 	</table>

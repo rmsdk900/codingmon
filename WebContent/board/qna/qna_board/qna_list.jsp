@@ -55,10 +55,18 @@
 						</tr>
 					</c:otherwise>
 				</c:choose>
-
 				<tr>
-					<td colspan="5"><a class="button is-primary"
+					<c:choose>
+						<c:when test="${!empty sessionScope.member}">
+							<td colspan="5"><a class="button is-primary"
 						href="boardWrite.bo">질문 하기</a></td>
+						</c:when>
+						<c:otherwise>
+							<td colspan="5"><a class="button is-primary"
+						href="${pageContext.request.contextPath}/user/login">질문 하기</a></td>
+						</c:otherwise>
+					</c:choose>
+					
 				</tr>
 
 

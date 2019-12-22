@@ -1,33 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>코딩몬 - 비밀번호 변경</title>
-</head>
-<body>
-	<section>
-		<h1>
-			비밀번호 변경
-		</h1>
-		<form id="changePwForm" action="changePw" method="post">
-			<input type="hidden" name="cm_email" value="${requestScope.email}"/>
-			<table>
-				<tr>
-					<td>새 비밀번호</td>
-					<td><input type="password" name="cm_pw" required/></td>
-				</tr>
-				<tr>
-					<td>새 비밀번호 확인</td>
-					<td><input type="password" id="re_pw" required/></td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="button" onclick="javascript:checkPassword()" value="변경요청"/></td>
-				</tr>
-			</table>
-		</form>
-	</section>
+	pageEncoding="UTF-8"%>
+
+<%@ include file="../common/header.jsp"%>
+
+<section class="hero is-fullheight is-primary">
+	<form id="changePwForm" action="changePw" method="post">
+		<input type="hidden" name="cm_email" value="${requestScope.email}" />
+		<div class="hero-body ">
+			<!-- class="hero-body" -->
+			<div class="container  has-text-centered">
+				<!--  -->
+				<div class="columns is-8 is-variable ">
+					<div class="column is-two-thirds has-text-left">
+						<h1 class="title is-1">비밀번호 변경</h1>
+
+					</div>
+					<div class="column is-one-third has-text-left ">
+						<!--  -->
+						<div class="field">
+							<label class="label">새 비밀번호</label> <input
+								class="input is-medium" type="password" name="cm_pw"
+								placeholder="새 비밀번호 " required />
+							<div class="control"></div>
+						</div>
+						<!-- 비밀번호 -->
+						<div class="field">
+							<label class="label">새 비밀번호 확인</label> <input
+								class="input is-medium " type="password" id="re_pw"
+								placeholder="새 비밀번호  확인" required />
+							<div class="control"></div>
+						</div>
+						<div class="control">
+							<input class="button is-primary is-inverted is-outlined"
+								type="button" onclick="javascript:checkPassword()" value="변경요청" />
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</section>
 </body>
 <script>
 	function checkPassword(){

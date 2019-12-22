@@ -4,20 +4,24 @@
 
 
 <jsp:include page="../common/header.jsp"/>
-<section>
-	<form action="sendPw" method="post">
-		<table>
-			<tr>
-				<td>이메일(아이디)</td>
-				<td><input type="email" name="cm_email"/></td>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="submit" value="메일발송"/></td>
-			</tr>
-			
-		</table>
-	</form>
+<section class="hero is-fullheight is-primary">
 
+<div style="width:70%; margin:auto;">
+	<form action="${pageContext.request.contextPath}/user/sendPw" method="post">
+		
+		<div class="tile is-parent is-vertical">
+			<article class="tile is-child notification is-primary">
+				<p class="">
+					이메일 입력 <br/> 
+					
+					<input class= "input" type="email" name="cm_email" /> 
+						<input class= "button is-light" type="submit" value="메일 발송" />
+						
+				</p>
+			</article>
+		</div>
+	</form>
+</div>
 </section>
 
 

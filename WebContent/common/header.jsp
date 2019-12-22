@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html>
 <html>
@@ -26,7 +27,8 @@
 		auth2.disconnect();
 	}
 </script> -->
-<!--bulma -->
+
+
 <!--bulma -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,9 +36,10 @@
 <meta name="author" content="">
 <link rel="stylesheet"
 	href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../BulmaJS-0.10.0/dist/dropdown.js"></script>
-<link rel="icon" href="${pageContext.request.contextPath}/images/cover.png">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<link rel="icon"
+	href="${pageContext.request.contextPath}/images/cover.png">
 <title>코딩몬</title>
 </head>
 <body>
@@ -86,4 +89,3 @@
 			</div>
 		</div>
 	</nav>
-	

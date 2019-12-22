@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>코딩몬</title>
+<%@ include file="../common/header.jsp" %>
 <!-- 날짜 입력창 관련 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+<!-- -------- -->
+<style type="text/css">
+   
+     img.ui-datepicker-trigger {
+                margin-left:5px; vertical-align:middle; cursor:pointer;
+	}
+   
+</style>
 <script>
   $(function(){
      $.datepicker.setDefaults($.datepicker.regional['ko']);
@@ -37,16 +40,6 @@
   });
 
 </script>
-<!-- -------- -->
-<style type="text/css">
-   
-     img.ui-datepicker-trigger {
-                margin-left:5px; vertical-align:middle; cursor:pointer;
-	}
-   
-</style>
-</head>
-<body>
 	<form id="insertInfoForm" action="insertInfo" method="post">
 		<input type="hidden" name="cm_num" value="${sessionScope.joinMember.cm_num}"/>
 		<h1>이력서 입력</h1>

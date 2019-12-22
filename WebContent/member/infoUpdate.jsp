@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ include file="../common/header.jsp" %>
 <c:set var="birth" value="${requestScope.info.cmi_age}"/>
 <c:set var="birthYear" value="${fn:substring(birth, 0, 4)}"/>
 <c:set var="birthMonth" value="${fn:substring(birth, 4, 6)}"/>
@@ -11,14 +10,6 @@
 <c:set var="phoneFirst"      value="${fn:substring(phone, 0, 3)}" />
 <c:set var="phoneMiddle"     value="${fn:substring(phone, 3, 7)}" />
 <c:set var="phoneLast"     value="${fn:substring(phone, 7, 11)}" />
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<title>코딩몬</title>
-</head>
-<body>
 	<form action="updateInfoSubmit" method="POST">
 		<input type="hidden" name="cm_num" value="${sessionScope.member.cm_num}"/>
 		<h1>이력서 수정</h1>

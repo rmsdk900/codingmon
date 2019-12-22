@@ -42,7 +42,7 @@
 			},
 			dataType: "json",
 			success : function(data){
-				alert(data ? "등록 성공" : "등록 실패");
+				
 				getList(1);
 				
 			}
