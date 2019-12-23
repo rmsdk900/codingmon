@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f"%>
-
+<%@ include file="../../../common/header.jsp" %>
 <c:set var="phone" value="${requestScope.prospects.cm_phone}"/>
 <c:set var="phoneFirst" value="${fn:substring(phone, 0, 3)}"/>
 <c:set var="phoneMiddle" value="${fn:substring(phone, 3, 7)}"/>
@@ -22,15 +19,6 @@
 <c:if test="${birthETC > nowsETC}">
 	<c:set var="age" value="${nowsYear-birthYear-1}"/>
 </c:if>
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 	<section>
 		<c:choose>
 			<c:when test="${!empty requestScope.prospects 
@@ -126,5 +114,4 @@
 			</c:otherwise>
 		</c:choose>
 	</section>
-</body>
-</html>
+<%@ include file="../../../common/footer.jsp" %>

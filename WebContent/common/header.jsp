@@ -37,7 +37,7 @@
 <link rel="stylesheet"
 	href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+<script src="../BulmaJS-0.10.0/dist/dropdown.js"></script>
 <link rel="icon"
 	href="${pageContext.request.contextPath}/images/cover.png">
 <title>코딩몬</title>
@@ -49,7 +49,7 @@
 
 		<div class="navbar-brand">
 			<a class="navbar-item"
-				href="http://localhost:8080/project_codingmon/user/home"> <img
+				href="${pageContext.request.contextPath}/user/home"> <img
 				src="${pageContext.request.contextPath}/images/cover.png" alt="MAIN">
 
 			</a> <a role="button" class="navbar-burger" aria-label="menu"

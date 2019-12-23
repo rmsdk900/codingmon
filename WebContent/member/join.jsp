@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp"%>
-<section>
+
+<section class="hero is-fullheight is-primary">
 	<form action="join" id="joinForm" method="post">
+		<div class="hero-body">
+			<div class="container has-text-centered">
+				
+			</div>
+		</div>
 		<table>
 			<tr>
 				<th colspan="2">회원가입</th>

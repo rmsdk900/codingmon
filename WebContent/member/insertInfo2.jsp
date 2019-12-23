@@ -1,20 +1,8 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<!--bulma  -->
-<meta name="viewport"
-   content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="stylesheet"
-   href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css">
-<link rel="icon" href="favicon.ico">
+<%@ include file="../common/header.jsp"%>
+
 <!--드롭다운  -->
 <link rel="stylesheet"
    href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -22,50 +10,50 @@
 <script
    src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
-<title>Insert title here</title>
+
+
 <!-- 날짜 입력창 관련 -->
-<link rel="stylesheet"
-   href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-<script>
-   $(function() {
-      $.datepicker.setDefaults($.datepicker.regional['ko']);
-      $('#cmi_age').datepicker(
-            {
-               showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
-               buttonImage : "${pageContext.request.contextPath}" + "/"
-                     + "images/calendar.gif", // 버튼 이미지
-               buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
-               buttonText : "날짜선택", // 버튼의 대체 텍스트
-               nextText : '다음 달',
-               prevText : '이전 달',
-               dayNames : [ '일요일', '월요일', '화요일', '수요일', '목요일', '금요일',
-                     '토요일' ],
-               dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-               monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
-                     '7월', '8월', '9월', '10월', '11월', '12월' ],
-               monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
-                     '8월', '9월', '10월', '11월', '12월' ],
-               dateFormat : "yymmdd", // 날짜의 형식
-               changeYear : true,
-               changeMonth : true
-            // 월을 이동하기 위한 선택상자 표시여부
-            });
-   });
-</script>
+
 <!-- -------- -->
 <style type="text/css">
-img.ui-datepicker-trigger {
-   margin-left: 5px;
-   vertical-align: middle;
-   cursor: pointer;
-}
+   
+     img.ui-datepicker-trigger {
+                margin-left:5px; vertical-align:middle; cursor:pointer;
+	}
+   
 </style>
-</head>
-<body>
+<script>
+  $(function(){
+     $.datepicker.setDefaults($.datepicker.regional['ko']);
+
+     $('#cmi_age').datepicker({
+          showOn: "both",                     // 달력을 표시할 타이밍 (both: focus or button)
+          buttonImage: "${pageContext.request.contextPath}"+"/"+"images/calendar.gif", // 버튼 이미지
+          buttonImageOnly : true,             // 버튼 이미지만 표시할지 여부
+          buttonText: "날짜선택",             // 버튼의 대체 텍스트
+          nextText: '다음 달',
+          prevText: '이전 달', 
+          dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+          dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+          monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+          monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+          dateFormat: "yymmdd",             // 날짜의 형식
+          changeYear: true,
+          yearRange: "-100:+0",
+          changeMonth: true                 // 월을 이동하기 위한 선택상자 표시여부
+      });
+
+
+
+  });
+
+</script>
+
    <!--    헤더 영역 -->
-   <%@ include file="../common/header.jsp"%>
+   
    <section class="hero is-primary is-fullheight-with-navbar">
       <form id="insertInfoForm" action="insertInfo" method="post">
          <input type="hidden" name="cm_num"
@@ -245,11 +233,14 @@ img.ui-datepicker-trigger {
 
                                  <div class="dropdown-item">
 
-                                    <c:forEach var="i" items="${requestScope.ej}">
-                                       <label> <input type="checkbox" class="cij_code"
-                                          name="cij_code" value="${i.cj_code}" /> ${i.cj_name}
-                                       </label>
-                                    </c:forEach>
+                                    <c:forEach var="i" items="${requestScope.es}">
+                        <c:if test="${i.cs_category eq 2}">
+                           <label>
+                              <input type="checkbox" name="cms_code_work" value="${i.cs_code}"/>
+                              ${i.cs_name}
+                           </label>
+                        </c:if>
+                     </c:forEach>
 
 
                                  </div>

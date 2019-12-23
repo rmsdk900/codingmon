@@ -33,7 +33,7 @@
 											&nbsp;&nbsp;&nbsp;
 										</c:forEach>
 										└▶
-									</c:if> <a href="boardDetail.bo?cbq_num=${board.cbq_num}">${board.cbq_title}</a>
+									</c:if> <a href="${pageContext.request.contextPath}/boardDetail.bo?cbq_num=${board.cbq_num}">${board.cbq_title}</a>
 										</td>
 										<td align=center width=90 style="word-break: break-all">${board.cbq_writer_name}</td>
 										<td align=center width=200 style="word-break: break-all">${board.cbq_regdate}</td>
@@ -73,7 +73,7 @@
 
 
 			</table>
-
+			
 			<nav>
 				<div class="container">
 					<div class="pagination is-centered" role="navigation"

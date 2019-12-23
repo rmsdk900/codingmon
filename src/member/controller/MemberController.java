@@ -45,7 +45,7 @@ public class MemberController extends HttpServlet {
 		
 		if(cmd.equals("user/join")) {
 			System.out.println("회원가입 화면 호출");
-			nextPage = "/member/join.jsp";
+			nextPage = "/member/join1.jsp";
 		}
 		
 		if(cmd.equals("user/login")) {
@@ -105,7 +105,7 @@ public class MemberController extends HttpServlet {
 			if(isSignUp) {
 				System.out.println("회원가입 성공");
 				service.getFullReSource(request);
-				nextPage="/member/insertInfo.jsp";
+				nextPage="/member/insertInfo1.jsp";
 			}else {
 				System.out.println("회원가입 실패");
 				response.setContentType("text/html;charset=utf-8");

@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>${RecruitVO.cbr_num}</title>
+<%@ include file="../../../common/header.jsp" %>
 
 <!-- 날짜 입력창 관련 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
@@ -87,5 +83,4 @@
 				</tr>
 			</table>
 		</form>
-	</body>
-</html>
+<%@ include file="../../../common/footer.jsp" %>

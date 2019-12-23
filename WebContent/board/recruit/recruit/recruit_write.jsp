@@ -28,7 +28,7 @@
      
      $('#date_start').datepicker({
          showOn: "both",                     // 달력을 표시할 타이밍 (both: focus or button)
-         buttonImage: "${pageContext.request.contextPath}"+"/"+"/images/calendar.gif", // 버튼 이미지
+         buttonImage: "${pageContext.request.contextPath}"+"/"+"images/calendar.gif", // 버튼 이미지
          buttonImageOnly : true,             // 버튼 이미지만 표시할지 여부
          buttonText: "날짜선택",             // 버튼의 대체 텍스트
          nextText: '다음 달',
@@ -51,7 +51,7 @@
      //종료일
      $('#date_end').datepicker({
          showOn: "both", 
-         buttonImage: "${pageContext.request.contextPath}"+"/"+"/images/calendar.gif", 
+         buttonImage: "${pageContext.request.contextPath}"+"/"+"images/calendar.gif", 
          buttonImageOnly : true,
          buttonText: "날짜선택",
          nextText: '다음 달',

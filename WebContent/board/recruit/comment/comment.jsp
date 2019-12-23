@@ -34,7 +34,7 @@
 	$("#commentWriteBtn").click(function(){
 		$.ajax({
 			type : "POST",
-			url : "commentWrite.ccr",
+			url : "${pageContext.request.contextPath}/commentWrite.ccr",
 			data : {
 				ccr_board_num : '${recruitVO.cbr_num}',
 				ccr_writer_num : '${sessionScope.member.cm_num}',
@@ -53,7 +53,7 @@
 	function getList(pageNum){
 		$.ajax({
 			type : "GET",
-			url : "commentList.ccr",
+			url : "${pageContext.request.contextPath}/commentList.ccr",
 			data : {
 				ccr_board_num : '${recruitVO.cbr_num}',
 				page : pageNum
@@ -160,7 +160,7 @@
 	function deleteComment(ccr_num){
 		$.ajax({
 			type : "POST",
-			url : "commentDelete.ccr",
+			url : "${pageContext.request.contextPath}/commentDelete.ccr",
 			data : {
 				ccr_writer_num : '${member.cm_num}',
 				ccr_num : ccr_num

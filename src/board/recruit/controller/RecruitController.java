@@ -58,7 +58,7 @@ public class RecruitController extends HttpServlet {
 		// recruit 게시글 작성 화면
 		if(cmd.equals("board/rec/write")) {
 			System.out.println("recruit 게시글 작성 화면 요청");
-			nextPage = "/board/recruit/recruit/recruit_write.jsp";
+			nextPage = "/board/recruit/recruit/recruit_write1.jsp";
 		}
 		
 		// recruit 게시글 수정 화면

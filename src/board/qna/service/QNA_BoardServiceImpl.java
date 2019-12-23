@@ -19,6 +19,7 @@ import board.qna.dao.QNA_BoardDAO;
 import board.qna.dao.QNA_BoardDAOImpl;
 import board.qna.vo.QNA_BoardVO;
 import board.qna.vo.QNA_CommentVO;
+import member.vo.MemberVO;
 import util.Criteria;
 import util.PageMaker;
 
@@ -201,10 +202,11 @@ public class QNA_BoardServiceImpl implements QNA_BoardService{
 			String cbq_file_origin = multi.getOriginalFileName(file);
 			
 			
-			// 현재 로그인되어있는 녀석의 회원번호 
-			//int loginMember_num = ((MemberVO)request.getSession().getAttribute("member")).getNum();
+			// 현재 로그인되어있는 녀석의 회원번호
+			MemberVO member = (MemberVO) request.getSession().getAttribute("member");
+			int loginMember_num = member.getCm_num();
 			// 일치하면 다음 단계 
-			if (cbq_writer_num == 1) {
+			if (cbq_writer_num == loginMember_num) {
 				// 바꿀 파일이 있을 때 원래 파일 삭제
 				if(file != null) {
 					QNA_BoardVO originBoard = qna_dao.getQNA_BoardVO(cbq_num);

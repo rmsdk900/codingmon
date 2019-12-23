@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-<Resource 
-		name="jdbc/MysqlDB" 
-		auth="container"
-		type="javax.sql.DataSource"
-		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
-		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/codingmondb?useSSL=false&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"  
-		username="myjava"
-		password="12345"
-		maxActive="100"
-		maxIdle="10" />
-</Context>
-
-<!-- 	<Resource 
+	<Resource 
 		name="jdbc/MysqlDB" 
 		auth="container"
 		type="javax.sql.DataSource"
@@ -23,7 +10,20 @@
 		username="myjava"
 		password="12345"
 		maxActive="100"
-		maxIdle="10" />	 -->
+		maxIdle="10" />	
+</Context>
+<!-- <Resource 
+		name="jdbc/MysqlDB" 
+		auth="container"
+		type="javax.sql.DataSource"
+		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/codingmondb?useSSL=false&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"  
+		username="myjava"
+		password="12345"
+		maxActive="100"
+		maxIdle="10" /> -->
+
 
 
 
